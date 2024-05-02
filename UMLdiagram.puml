@@ -4,7 +4,7 @@ title Missile Command
 class missle_command {
   +ArrayList<Missile> missiles
   +ArrayList<Explosion> explosions
-  +Base base
+  +ArrayList<Base> bases
   +boolean debug
   +GameState currentState
   +int lastFireTime
@@ -14,7 +14,7 @@ class missle_command {
   +setup()
   +draw()
   +keyPressed()
-  +mouseClicked()
+  +Base getClosestBase()
 }
 
 class Missile {
@@ -34,6 +34,7 @@ class Base {
   +Base(float x, float y)
   +display()
   +destroy()
+  +isActive()
   +PVector getPosition()
 }
 
