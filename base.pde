@@ -13,7 +13,7 @@ class Base {
   }
 
   void fire() {
-    missiles.add(new Missile(base.position.x, base.position.y, mouseX, mouseY));
+    missiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY));
     ammo--;
   }
 
@@ -28,5 +28,13 @@ class Base {
 
   void destroy() {
     isActive = false;
+  }
+
+  boolean isActive() {
+    return isActive;
+  }
+
+  PVector getPosition() {
+    return position;
   }
 }

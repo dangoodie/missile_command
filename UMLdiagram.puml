@@ -7,6 +7,8 @@ class missle_command {
   +Base base
   +boolean debug
   +GameState currentState
+  +int lastFireTime
+  +int fireDelay
   +setupGame()
   +drawGame()
   +setup()
@@ -32,6 +34,7 @@ class Base {
   +Base(float x, float y)
   +display()
   +destroy()
+  +PVector getPosition()
 }
 
 class Explosion {

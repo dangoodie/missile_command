@@ -2,7 +2,7 @@
 
 ArrayList<Missile> missiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
-Base base;
+ArrayList<Base> bases = new ArrayList<Base>();
 boolean debug = false; // set to true to enable deubgging features
 GameState currentState = GameState.MENU;
 
@@ -11,14 +11,18 @@ int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 1000; // Delay in milliseconds (1 second)
 
 void setupGame() {
-  base = new Base(width / 2, height - 50);
+  bases.add(new Base(width / 2, height - 50));
+  bases.add(new Base(width / 4, height - 50));
+  bases.add(new Base(width * 3 / 4, height - 50));
   lastFireTime = millis();
 }
 
 
 void drawGame() {
   background(0);
-  base.display();
+  for (Base b : bases) {
+    b.display();
+  }
 
   for (int i = missiles.size() - 1; i >= 0; i--) {
     Missile m = missiles.get(i);
@@ -39,9 +43,12 @@ void drawGame() {
     }
   }
 
-  if (mousePressed && base.hasAmmo() && millis() - lastFireTime > fireDelay) {
-    base.fire();
+  if (mousePressed && millis() - lastFireTime > fireDelay) {
     lastFireTime = millis();
+    Base closestBase = getClosetBase();
+    if (closestBase != null) {
+      closestBase.fire();
+    }
   }
 }
 
@@ -69,4 +76,26 @@ void keyPressed() {
     key = 0; // Prevent default behavior
     currentState = GameState.MENU;
   }
+}
+
+// helper functions
+Base getClosetBase() {
+  Base closestBase = null;
+  float closestDistance = Float.MAX_VALUE;
+  for (Base b : bases) {
+    if (!b.hasAmmo()) {
+      continue;
+    }
+    if (!b.isActive()){
+      continue;
+    }
+    PVector mouse = new PVector(mouseX, mouseY);
+    PVector base = b.getPosition();
+    float distance = PVector.dist(mouse, base);
+    if (distance < closestDistance) {
+      closestBase = b;
+      closestDistance = distance;
+    }
+  }
+  return closestBase;
 }
