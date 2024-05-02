@@ -1,12 +1,10 @@
-GameState currentState = GameState.MENU;
-
 // Game code
 
 ArrayList<Missile> missiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 Base base;
 boolean debug = false; // set to true to enable deubgging features
-
+GameState currentState = GameState.MENU;
 
 void setupGame() {
   base = new Base(width / 2, height - 50);

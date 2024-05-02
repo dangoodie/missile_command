@@ -1,0 +1,69 @@
+@startuml Missile Command
+title Missile Command
+
+class missle_command {
+  +ArrayList<Missile> missiles
+  +ArrayList<Explosion> explosions
+  +Base base
+  +boolean debug
+  +GameState currentState
+  +setupGame()
+  +drawGame()
+  +setup()
+  +draw()
+  +keyPressed()
+  +mouseClicked()
+}
+
+class Missile {
+  +PVector position
+  +PVector target
+  +PVector velocity
+  +float speed
+  +Missle(float x, float y, float tx, float ty)
+  +update()
+  +display()
+  +boolean hasHitTarget()
+}
+
+class Base {
+  +PVector position
+  +boolean isActive
+  +Base(float x, float y)
+  +display()
+  +destroy()
+}
+
+class Explosion {
+  +PVector position
+  +float lifespan
+  +float size
+  +Explosion(float x, float y)
+  +update()
+  +display()
+  +boolean isDead()
+}
+
+class menu_controller {
+  +Button startButton
+  +Button quitButton
+  +setupMenu()
+  +drawMenu()
+}
+
+class Button {
+  +float x
+  +float y
+  +float w
+  +float h
+  +String label
+  +Runnable action
+  +Button(float x, float y, float w, float h, String label, Runnable action)
+  +display()
+  +boolean overButton()
+  +checkClick()
+}
+enum gamestate {
+  MENU, GAME
+}
+@enduml
