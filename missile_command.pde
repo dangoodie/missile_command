@@ -6,8 +6,13 @@ Base base;
 boolean debug = false; // set to true to enable deubgging features
 GameState currentState = GameState.MENU;
 
+// Missile firing logic
+int lastFireTime = 0; // Last time a missile was fired
+int fireDelay = 1000; // Delay in milliseconds (1 second)
+
 void setupGame() {
   base = new Base(width / 2, height - 50);
+  lastFireTime = millis();
 }
 
 
@@ -32,6 +37,11 @@ void drawGame() {
     if (e.isDead()) {
       explosions.remove(i);
     }
+  }
+
+  if (mousePressed && base.hasAmmo() && millis() - lastFireTime > fireDelay) {
+    base.fire();
+    lastFireTime = millis();
   }
 }
 
@@ -58,13 +68,5 @@ void keyPressed() {
   if (key == ESC) {
     key = 0; // Prevent default behavior
     currentState = GameState.MENU;
-  }
-}
-
-void mouseClicked() {
-  if (currentState == GameState.GAME) {
-    if (base.hasAmmo()) {
-      base.fire();
-    }
   }
 }

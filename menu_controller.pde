@@ -5,7 +5,7 @@ Button quitButton;
 
 void setupMenu() {
   // Define buttons with actions
-  startButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "Start", () -> {
+  startButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "Start", () -> {   
     currentState = GameState.GAME;
     setupGame();
     });
