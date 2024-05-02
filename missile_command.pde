@@ -3,6 +3,7 @@
 ArrayList<Missile> missiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
+ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // set to true to enable deubgging features
 GameState currentState = GameState.MENU;
 
@@ -14,6 +15,12 @@ void setupGame() {
   bases.add(new Base(width / 2, height - 50));
   bases.add(new Base(width / 4, height - 50));
   bases.add(new Base(width * 3 / 4, height - 50));
+
+  // Create 6 cities at the bottom of the screen
+  for (int i = 0; i < 6; i++) {
+    cities.add(new City(i * width / 6 + width / 12, height - 50));
+  }
+
   lastFireTime = millis();
 }
 
@@ -58,6 +65,7 @@ void drawGame() {
 void setup() {
   size(800, 600);
   setupMenu();
+  frameRate(60);
 }
 
 void draw() {

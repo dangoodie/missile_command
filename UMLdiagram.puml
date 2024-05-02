@@ -5,6 +5,7 @@ class missle_command {
   +ArrayList<Missile> missiles
   +ArrayList<Explosion> explosions
   +ArrayList<Base> bases
+  +ArrayList<City> cities
   +boolean debug
   +GameState currentState
   +int lastFireTime
@@ -36,6 +37,13 @@ class Base {
   +destroy()
   +isActive()
   +PVector getPosition()
+}
+
+class City {
+  +PVector position
+  +City(float x, float y)
+  +display()
+  +destroy()
 }
 
 class Explosion {
