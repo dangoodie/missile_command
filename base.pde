@@ -1,11 +1,11 @@
 class Base {
   PVector position; // Position of the base
-  boolean isActive; // State of the base
+  boolean isAlive; // State of the base
   int ammo = 10; // Ammo of the base
 
   Base(float x, float y) {
     position = new PVector(x, y);
-    isActive = true;
+    isAlive = true;
   }
 
   boolean hasAmmo() {
@@ -27,11 +27,11 @@ class Base {
   }
 
   void destroy() {
-    isActive = false;
+    isAlive = false;
   }
 
-  boolean isActive() {
-    return isActive;
+  boolean isAlive() {
+    return isAlive;
   }
 
   PVector getPosition() {

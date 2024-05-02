@@ -12,14 +12,16 @@ int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 1000; // Delay in milliseconds (1 second)
 
 void setupGame() {
-  bases.add(new Base(width / 2, height - 50));
-  bases.add(new Base(width / 4, height - 50));
-  bases.add(new Base(width * 3 / 4, height - 50));
+  bases.add(new Base(100, height - 50));
+  bases.add(new Base(400, height - 50));
+  bases.add(new Base(700, height - 50));
 
-  // Create 6 cities at the bottom of the screen
-  for (int i = 0; i < 6; i++) {
-    cities.add(new City(i * width / 6 + width / 12, height - 50));
-  }
+  cities.add(new City(150, height - 50));
+  cities.add(new City(250, height - 50));
+  cities.add(new City(350, height - 50));
+  cities.add(new City(450, height - 50));
+  cities.add(new City(550, height - 50));
+  cities.add(new City(650, height - 50));
 
   lastFireTime = millis();
 }
@@ -29,6 +31,10 @@ void drawGame() {
   background(0);
   for (Base b : bases) {
     b.display();
+  }
+
+  for (City c : cities) {
+    c.display();
   }
 
   for (int i = missiles.size() - 1; i >= 0; i--) {
@@ -94,7 +100,7 @@ Base getClosetBase() {
     if (!b.hasAmmo()) {
       continue;
     }
-    if (!b.isActive()){
+    if (!b.isAlive()){
       continue;
     }
     PVector mouse = new PVector(mouseX, mouseY);

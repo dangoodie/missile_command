@@ -31,7 +31,7 @@ class Missile {
 
 class Base {
   +PVector position
-  +boolean isActive
+  +boolean isAlive
   +Base(float x, float y)
   +display()
   +destroy()
@@ -44,6 +44,8 @@ class City {
   +City(float x, float y)
   +display()
   +destroy()
+  +PVector getPosition()
+  +boolean isAlive()
 }
 
 class Explosion {

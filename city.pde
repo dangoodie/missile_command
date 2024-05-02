@@ -1,19 +1,27 @@
 class City {
-  PVector location;
+  PVector position;
   boolean isAlive;
 
   City(float x, float y) {
-    location = new PVector(x, y);
+    position = new PVector(x, y);
     isAlive = true;
   }
 
   void display() {
     fill(255);
     stroke(0);
-    ellipse(location.x, location.y, 8, 8);
+    ellipse(position.x, position.y, 8, 8);
   }
 
   void destroy() {
     isAlive = false;
+  }
+
+  PVector getPosition() {
+    return position;
+  }
+
+  boolean isAlive() {
+    return isAlive;
   }
 }
