@@ -63,6 +63,8 @@ void keyPressed() {
 
 void mouseClicked() {
   if (currentState == GameState.GAME) {
-    missiles.add(new Missile(base.position.x, base.position.y, mouseX, mouseY));
+    if (base.hasAmmo()) {
+      base.fire();
+    }
   }
 }
