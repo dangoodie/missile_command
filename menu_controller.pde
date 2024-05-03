@@ -1,16 +1,16 @@
-// Menu code
-
 Button startButton;
 Button quitButton;
 
 void setupMenu() {
-  // Define buttons with actions
+  // Start button
   startButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "Start", () -> {   
     currentState = GameState.GAME;
     setupGame();
-    });
+  });
   startButton.bgColor = color(70, 195, 76);
   startButton.bgHoverColor = color(71,159,120);
+
+  // Quit button
   quitButton = new Button(width/2 - 100, height/2 + 20, 200, 50, "Quit", () -> {
     exit();
   });
@@ -20,6 +20,8 @@ void setupMenu() {
 
 void drawMenu() {
   background(0);
+  cursor();
+  
   startButton.display();
   quitButton.display();
   startButton.checkClick();
