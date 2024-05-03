@@ -13,14 +13,16 @@ class Base {
   }
 
   void fire() {
-    missiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY));
+    antiMissiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY));
     ammo--;
   }
 
   void display() {
+    // Drawing the base
     fill(0, 255, 0);
     noStroke();
-    ellipse(position.x, position.y, 20, 20); // Drawing the base
+    ellipse(position.x, position.y, 20, 20);
+
     // Displaying the ammo
     fill(255);
     text(ammo, position.x, position.y + 20);
