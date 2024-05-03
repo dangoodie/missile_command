@@ -4,7 +4,7 @@ class Button {
   String label; // Button text
   Runnable action; // Action to perform on click
   
-  // default values that can be changed
+  // Default values that can be changed
   color bgColor = 200;
   color bgHoverColor = 160;
   color textColor = 0;
@@ -25,8 +25,11 @@ class Button {
     } else {
       fill(bgColor);  
     }
-    rect(x, y, w, h, 10); // Draw button with rounded corners
+
+    // Draw button with rounded corners
+    rect(x, y, w, h, 10);
     fill(textColor);
+
     textSize(textSize);
     textAlign(CENTER, CENTER);
     text(label, x + w/2, y + h/2);
@@ -34,7 +37,6 @@ class Button {
 
   boolean overButton() {
     // Check if the mouse is over the button
-    
     return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
   }
 
@@ -44,4 +46,3 @@ class Button {
     }
   }
 }
-
