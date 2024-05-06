@@ -1,5 +1,6 @@
 PImage background, crosshair, antimissile_unexploded, antimissile_exploded;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
+ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>(); // Anti-missile batteries
 ArrayList<City> cities = new ArrayList<City>();
@@ -24,19 +25,30 @@ void setupGame() {
 
   lastFireTime = millis();
 
-  // Images
-  background = loadImage("images/background.png");
-  crosshair = loadImage("images/crosshair.png");
-  antimissile_unexploded = loadImage("images/antimissile_unexploded.png");
-  antimissile_exploded = loadImage("images/antimissile_exploded.png");
+//  // Images
+//  Uncomment once these are available 
+//  background = loadImage("images/background.png");
+//  crosshair = loadImage("images/crosshair.png");
+//  antimissile_unexploded = loadImage("images/antimissile_unexploded.png");
+//  antimissile_exploded = loadImage("images/antimissile_exploded.png");
 }
 
+// TODO: Change this later with level switching logic
+boolean newLevel = true;
+int level = 0;
+
 void drawGame() {
-  image(background, 0, 0);
+  //image(background, 0, 0); // uncomment once image is available
+  background(0);
 
   // Crosshair
   noCursor();
-  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  //image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14); // uncomment once image is available
+  
+  if (newLevel) {
+    spawnEnemyMissiles(level);
+    newLevel = false;
+  }
 
   for (Base b : bases) {
     b.display();
@@ -53,6 +65,16 @@ void drawGame() {
     if (m.hasHitTarget()) {
       explosions.add(new Explosion(m.position.x, m.position.y));
       antiMissiles.remove(i);
+    }
+  }
+
+  for (int i = enemyMissiles.size() - 1; i >= 0; i--) {
+    Missile m = enemyMissiles.get(i);
+    m.update();
+    m.display();
+    if (m.hasHitTarget()) {
+      explosions.add(new Explosion(m.position.x, m.position.y));
+      enemyMissiles.remove(i);
     }
   }
 
@@ -123,4 +145,30 @@ Base getClosetBase() {
     }
   }
   return closestBase;
+}
+
+void spawnEnemyMissiles(int level) {
+	for (int i = 0; i < 6; i++) {
+		PVector t = pickValidTarget();
+		float r = random(width);
+    float speed = 1;
+		enemyMissiles.add(new Missile(r, 0, t.x, t.y, speed, true)); 
+	}
+}
+
+PVector pickValidTarget() {
+	ArrayList<PVector> targets = new ArrayList<PVector>();
+	for (int i = 0; i < bases.size(); i++) {
+		if (bases.get(i).isAlive()) {
+			targets.add(bases.get(i).getPosition());
+		}
+	}
+	for (int i = 0; i < cities.size(); i++) {
+		if (cities.get(i).isAlive()) {
+			targets.add(cities.get(i).getPosition());
+		}
+	}
+	int selection  = int(random(targets.size()));
+
+	return targets.get(selection);
 }

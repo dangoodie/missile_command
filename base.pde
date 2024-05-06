@@ -2,6 +2,7 @@ class Base {
   PVector position; // Position of the base
   boolean isAlive; // State of the base
   int ammo = 10; // Ammo of the base
+  float speed = 5;
 
   Base(float x, float y) {
     position = new PVector(x, y);
@@ -13,7 +14,7 @@ class Base {
   }
 
   void fire() {
-    antiMissiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY));
+    antiMissiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY, speed, false));
     ammo--;
   }
 
