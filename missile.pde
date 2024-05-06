@@ -2,14 +2,17 @@ class Missile {
   PVector position;
   PVector target;
   PVector velocity;
-  float speed = 5.0;
+  float speed;
+  boolean isEnemy;
 
-  Missile(float x, float y, float tx, float ty) {
+  Missile(float x, float y, float tx, float ty, float speed, boolean isEnemy) {
     position = new PVector(x, y);
     target = new PVector(tx, ty);
     velocity = PVector.sub(target, position);
     velocity.normalize();
+    this.speed = speed;
     velocity.mult(speed);
+    this.isEnemy = isEnemy;
   }
 
   void update() {
