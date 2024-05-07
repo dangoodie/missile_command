@@ -21,4 +21,13 @@ class Explosion {
   boolean isDead() {
     return lifespan < 0;
   }
+
+  // Getter methods
+  public float getX() {
+    return position.x;
+  }
+
+  public float getY() {
+    return position.y;
+  }
 }

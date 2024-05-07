@@ -9,10 +9,12 @@ class Missile {
     position = new PVector(x, y);
     target = new PVector(tx, ty);
     velocity = PVector.sub(target, position);
-    velocity.normalize();
+
     this.speed = speed;
-    velocity.mult(speed);
     this.isEnemy = isEnemy;
+
+    velocity.normalize();
+    velocity.mult(speed);
   }
 
   void update() {
@@ -26,6 +28,32 @@ class Missile {
   }
 
   boolean hasHitTarget() {
-    return PVector.dist(position, target) < 10;
+    if (isEnemy) {
+      // Check if the missile's position overlaps with any target's position
+      for (Base b : bases) {
+        if (b.isAlive() && dist(position.x, position.y, b.getPosition().x, b.getPosition().y) < 10) {
+          return true;
+        }
+      }
+
+      for (City c : cities) {
+        if (c.isAlive() && dist(position.x, position.y, c.getPosition().x, c.getPosition().y) < 10) {
+          return true;
+        }
+      }
+    } else {
+      return dist(position.x, position.y, target.x, target.y) < 10;
+    }
+
+    return false;
+  }
+
+  // Getter methods
+  public float getX() {
+    return position.x;
+  }
+
+  public float getY() {
+    return position.y;
   }
 }

@@ -19,17 +19,20 @@ class Base {
   }
 
   void display() {
-    // Drawing the base
-    fill(0, 255, 0);
-    noStroke();
-    ellipse(position.x, position.y, 20, 20);
+    if (isAlive) {
+      // Drawing the base
+      fill(0, 255, 0);
+      noStroke();
+      ellipse(position.x, position.y, 20, 20);
 
-    // Displaying the ammo
-    fill(255);
-    text(ammo, position.x, position.y + 20);
+      // Displaying the ammo
+      fill(255);
+      text(ammo, position.x, position.y + 20);
+    }
   }
 
   void destroy() {
+    ammo = 0;
     isAlive = false;
   }
 

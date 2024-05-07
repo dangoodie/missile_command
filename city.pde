@@ -8,9 +8,11 @@ class City {
   }
 
   void display() {
-    fill(255);
-    stroke(0);
-    ellipse(position.x, position.y, 8, 8);
+    if (isAlive) {
+      fill(255);
+      stroke(0);
+      ellipse(position.x, position.y, 8, 8);
+    }
   }
 
   void destroy() {
