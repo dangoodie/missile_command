@@ -1,7 +1,7 @@
 class Explosion {
   PVector position;
-  float lifespan = 50;
   float size = 0;
+  float lifespan = 50;
 
   Explosion(float x, float y) {
     position = new PVector(x, y);
@@ -20,6 +20,11 @@ class Explosion {
 
   boolean isDead() {
     return lifespan < 0;
+  }
+
+  boolean detectCollisionWithinRadius(float targetX, float targetY) {
+    float distance = dist(position.x, position.y, targetX, targetY);
+    return distance <= size;
   }
 
   // Getter methods
