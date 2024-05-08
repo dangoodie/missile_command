@@ -3,12 +3,14 @@ class Missile {
   PVector target;
   PVector velocity;
   float speed;
+  boolean isAlive;
   boolean isEnemy;
 
   Missile(float x, float y, float tx, float ty, float speed, boolean isEnemy) {
     position = new PVector(x, y);
     target = new PVector(tx, ty);
     velocity = PVector.sub(target, position);
+    isAlive = true;
 
     this.speed = speed;
     this.isEnemy = isEnemy;
@@ -22,9 +24,15 @@ class Missile {
   }
 
   void display() {
-    stroke(255, 0, 0);
-    strokeWeight(2);
-    line(position.x, position.y, position.x - velocity.x, position.y - velocity.y);
+    if (isAlive) {
+      stroke(255, 0, 0);
+      strokeWeight(2);
+      line(position.x, position.y, position.x - velocity.x, position.y - velocity.y);
+    }
+  }
+
+  void death() {
+    isAlive = false;
   }
 
   boolean hasHitTarget() {
