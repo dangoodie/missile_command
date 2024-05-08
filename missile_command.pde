@@ -75,22 +75,24 @@ void drawGame() {
     m.update();
     m.display();
 
-    if (m.hasHitTarget()) {
-      explosions.add(new Explosion(m.position.x, m.position.y));
-      enemyMissiles.remove(i);
-      
-      // Determine which target the missile hit and call destroy() function
-      for (Base b : bases) {
-        if (b.isAlive() && dist(m.position.x, m.position.y, b.getPosition().x, b.getPosition().y) < 10) {
-          b.destroy();
-          break;
+    if (m.isAlive == true) {
+      if (m.hasHitTarget()) {
+        explosions.add(new Explosion(m.position.x, m.position.y));
+        enemyMissiles.remove(i);
+        
+        // Determine which target the missile hit and call destroy() function
+        for (Base b : bases) {
+          if (b.isAlive() && dist(m.position.x, m.position.y, b.getPosition().x, b.getPosition().y) < 10) {
+            b.destroy();
+            break;
+          }
         }
-      }
-      
-      for (City c : cities) {
-        if (c.isAlive() && dist(m.position.x, m.position.y, c.getPosition().x, c.getPosition().y) < 10) {
-          c.destroy();
-          break;
+        
+        for (City c : cities) {
+          if (c.isAlive() && dist(m.position.x, m.position.y, c.getPosition().x, c.getPosition().y) < 10) {
+            c.destroy();
+            break;
+          }
         }
       }
     }
@@ -104,6 +106,15 @@ void drawGame() {
 
     e.update();
     e.display();
+
+    // Check if there are any enemyMissiles within explosion radius
+    for (int j = enemyMissiles.size() - 1; j >= 0; j--) {
+      Missile em = enemyMissiles.get(j);
+
+      if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
+        em.death();
+      }
+    }
 
     if (e.isDead()) {
       explosions.remove(i);
