@@ -40,7 +40,7 @@ class Missile {
   }
 
   boolean hasHitTarget() {
-    if (dist(position.x, position.y, target.getPosition().x, target.getPosition().y) < 10) {
+    if (dist(position.x, position.y, target.getPosition().x, target.getPosition().y) < 5) {
       return true;
     }
     return false;

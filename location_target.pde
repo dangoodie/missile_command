@@ -16,10 +16,6 @@ class LocationTarget implements Target {
 
   }
 
-  void destroy() {
-    // This method does nothing for a LocationTarget
-  }
-
   PVector getPosition() {
     // Return the position of the target
     return this.position;
