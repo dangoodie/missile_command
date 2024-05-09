@@ -1,16 +1,12 @@
 class Base {
-  PVector position; // Position of the base
-  boolean isAlive; // State of the base
-  int ammo = 10; // Ammo of the base
+  PVector position, missileDestination;
+  boolean isAlive;
+  int ammo = 10;
   float speed = 5;
 
   Base(float x, float y) {
     position = new PVector(x, y);
     isAlive = true;
-  }
-
-  boolean hasAmmo() {
-    return ammo > 0;
   }
 
   void fire() {
@@ -34,6 +30,10 @@ class Base {
   void destroy() {
     ammo = 0;
     isAlive = false;
+  }
+
+  boolean hasAmmo() {
+    return ammo > 0;
   }
 
   boolean isAlive() {
