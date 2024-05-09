@@ -80,19 +80,12 @@ void drawGame() {
         explosions.add(new Explosion(m.position.x, m.position.y, true));
         enemyMissiles.remove(i);
         
-        // Determine which target the missile hit and call destroy() function
-        for (Base b : bases) {
-          if (b.isAlive() && dist(m.position.x, m.position.y, b.getPosition().x, b.getPosition().y) < 10) {
-            b.destroy();
-            break;
-          }
-        }
-        
-        for (City c : cities) {
-          if (c.isAlive() && dist(m.position.x, m.position.y, c.getPosition().x, c.getPosition().y) < 10) {
-            c.destroy();
-            break;
-          }
+        if (m.target instanceof Base) {
+          Base b = (Base) m.target;
+          b.death();
+        } else if (m.target instanceof City) {
+          City c = (City) m.target;
+          c.death();
         }
       }
     }

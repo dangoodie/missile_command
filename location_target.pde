@@ -20,9 +20,4 @@ class LocationTarget implements Target {
     // Return the position of the target
     return this.position;
   }
-
-  boolean isAlive() {
-    // A LocationTarget is always considered "alive"
-    return true;
-  }
 }
