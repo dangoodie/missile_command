@@ -7,7 +7,7 @@ ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // Set this to true to enable debugging features
 GameState currentState = GameState.MENU;
 int lastFireTime = 0; // Last time a missile was fired
-int fireDelay = 1000; // Delay in milliseconds (1 second)
+int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
 // TODO: Change this later with level switching logic
 boolean newLevel = true;
@@ -30,7 +30,7 @@ void setupGame() {
   // Images
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
-  destination = loadImage("images/destination.png");
+  //destination = loadImage("images/destination.png"); TODO: Implement this later
 }
 
 void drawGame() {
@@ -179,26 +179,27 @@ Base getClosestBase() {
 }
 
 void spawnEnemyMissiles(int level) {
+  // TODO: Implement level logic
   for (int i = 0; i < 6; i++) {
-    PVector t = pickValidTarget();
+    Target t = pickValidTarget();
     float r = random(width);
     float speed = 1;
-    enemyMissiles.add(new Missile(r, 0, t.x, t.y, speed, true)); 
+    enemyMissiles.add(new Missile(r, 0, t, speed, true)); 
   }
 }
 
-PVector pickValidTarget() {
-  ArrayList<PVector> targets = new ArrayList<PVector>();
+Target pickValidTarget() {
+  ArrayList<Target> targets = new ArrayList<Target>();
 
   for (int i = 0; i < bases.size(); i++) {
     if (bases.get(i).isAlive()) {
-      targets.add(bases.get(i).getPosition());
+      targets.add(bases.get(i));
     }
   }
 
   for (int i = 0; i < cities.size(); i++) {
     if (cities.get(i).isAlive()) {
-      targets.add(cities.get(i).getPosition());
+      targets.add(cities.get(i));
     }
   }
 

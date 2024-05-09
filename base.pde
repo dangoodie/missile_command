@@ -10,7 +10,8 @@ class Base implements Target {
   }
 
   void fire() {
-    antiMissiles.add(new Missile(this.position.x, this.position.y, mouseX, mouseY, speed, false));
+    Target t = new LocationTarget(new PVector(mouseX, mouseY));
+    antiMissiles.add(new Missile(this.position.x, this.position.y, t, speed, false));
     ammo--;
   }
 
@@ -24,6 +25,8 @@ class Base implements Target {
       // Displaying the ammo
       fill(255);
       text(ammo, position.x, position.y + 20);
+    } else {
+      // display destroyed base
     }
   }
 
