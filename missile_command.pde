@@ -1,12 +1,10 @@
-PImage background, crosshair, antimissile_unexploded, antimissile_exploded;
-ArrayList<PVector> lastMouseClickPositions = new ArrayList<PVector>();
+PImage background, crosshair, destination;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // Set this to true to enable debugging features
-boolean showDestination = false;
 GameState currentState = GameState.MENU;
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 1000; // Delay in milliseconds (1 second)
@@ -32,6 +30,7 @@ void setupGame() {
   // Images
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
+  destination = loadImage("images/destination.png");
 }
 
 void drawGame() {
@@ -61,10 +60,10 @@ void drawGame() {
     Missile m = antiMissiles.get(i);
     m.update();
     m.display();
+    m.showDestination();
 
     if (m.hasHitTarget()) {
-      // Create a new Explosion object, add it to the explosions list, and remove the current Missile object from the antiMissiles list
-      explosions.add(new Explosion(m.position.x, m.position.y));
+      explosions.add(new Explosion(m.position.x, m.position.y, false));
       antiMissiles.remove(i);
     }
   }
@@ -75,22 +74,25 @@ void drawGame() {
     m.update();
     m.display();
 
-    if (m.hasHitTarget()) {
-      explosions.add(new Explosion(m.position.x, m.position.y));
-      enemyMissiles.remove(i);
-      
-      // Determine which target the missile hit and call destroy() function
-      for (Base b : bases) {
-        if (b.isAlive() && dist(m.position.x, m.position.y, b.getPosition().x, b.getPosition().y) < 10) {
-          b.destroy();
-          break;
+    // Destroy targets
+    if (m.isAlive == true) {
+      if (m.hasHitTarget()) {
+        explosions.add(new Explosion(m.position.x, m.position.y, true));
+        enemyMissiles.remove(i);
+        
+        // Determine which target the missile hit and call destroy() function
+        for (Base b : bases) {
+          if (b.isAlive() && dist(m.position.x, m.position.y, b.getPosition().x, b.getPosition().y) < 10) {
+            b.destroy();
+            break;
+          }
         }
-      }
-      
-      for (City c : cities) {
-        if (c.isAlive() && dist(m.position.x, m.position.y, c.getPosition().x, c.getPosition().y) < 10) {
-          c.destroy();
-          break;
+        
+        for (City c : cities) {
+          if (c.isAlive() && dist(m.position.x, m.position.y, c.getPosition().x, c.getPosition().y) < 10) {
+            c.destroy();
+            break;
+          }
         }
       }
     }
@@ -99,11 +101,17 @@ void drawGame() {
   // Explosions
   for (int i = explosions.size() - 1; i >= 0; i--) {
     Explosion e = explosions.get(i);
-
-    // TODO: Remove "X" destination
-
     e.update();
     e.display();
+
+    // Check if there are any enemy missiles within explosion radius
+    for (int j = enemyMissiles.size() - 1; j >= 0; j--) {
+      Missile em = enemyMissiles.get(j);
+
+      if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
+        em.death();
+      }
+    }
 
     if (e.isDead()) {
       explosions.remove(i);
@@ -115,17 +123,6 @@ void drawGame() {
     Base closestBase = getClosestBase();
     if (closestBase != null) {
       closestBase.fire();
-    }
-  }
-
-  // Show anti-missile destination with "X"
-  if (showDestination) {
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(24);
-
-    for (PVector pos : lastMouseClickPositions) {
-      text("X", pos.x, pos.y);
     }
   }
 }
@@ -176,10 +173,6 @@ Base getClosestBase() {
       closestBase = b;
       closestDistance = distance;
     }
-
-    // Show destination
-    lastMouseClickPositions.add(new PVector(mouseX, mouseY));
-    showDestination = true;
   }
 
   return closestBase;
