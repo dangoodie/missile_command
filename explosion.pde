@@ -1,10 +1,12 @@
 class Explosion {
   PVector position;
-  float lifespan = 50;
   float size = 0;
+  float lifespan = 50;
+  boolean isEnemy;
 
-  Explosion(float x, float y) {
+  Explosion(float x, float y, boolean isEnemy) {
     position = new PVector(x, y);
+    this.isEnemy = isEnemy;
   }
 
   void update() {
@@ -13,13 +15,25 @@ class Explosion {
   }
 
   void display() {
-    noStroke();
+    // noStroke();
     fill(255, 150, 0, lifespan * 5); // Color fades as the explosion "ages"
     ellipse(position.x, position.y, size, size);
+
+    // Uncomment if there are different images for enemies and anti-missiles
+    // if (isEnemy) {
+    //   image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);
+    // } else {
+    //   image(antimissile_explosion, position.x - size/2, position.y - size/2, size, size);
+    // }
   }
 
   boolean isDead() {
     return lifespan < 0;
+  }
+
+  boolean detectCollisionWithinRadius(float targetX, float targetY) {
+    float distance = dist(position.x, position.y, targetX, targetY);
+    return distance <= size - 40;
   }
 
   // Getter methods
