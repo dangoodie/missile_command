@@ -1,4 +1,4 @@
-class Base {
+class Base implements Target {
   PVector position, missileDestination;
   boolean isAlive;
   int ammo = 10;
