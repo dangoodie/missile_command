@@ -82,10 +82,10 @@ void drawGame() {
         
         if (m.target instanceof Base) {
           Base b = (Base) m.target;
-          b.death();
+          b.destroy();
         } else if (m.target instanceof City) {
           City c = (City) m.target;
-          c.death();
+          c.destroy();
         }
       }
     }
