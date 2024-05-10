@@ -12,6 +12,8 @@ class City implements Target {
       fill(255);
       stroke(0);
       ellipse(position.x, position.y, 8, 8);
+    } else {
+      // display destroyed city
     }
   }
 

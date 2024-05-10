@@ -1,6 +1,4 @@
-Interface Target {
-  display();
-  destroy();
-  getPosition();
-  isAlive();
+interface Target {
+  void display();
+  PVector getPosition();
 }
