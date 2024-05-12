@@ -4,12 +4,22 @@ ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
-boolean debug = false; // Set this to true to enable debugging features
+boolean debug = true; // Set this to true to enable debugging features
 GameState currentState = GameState.MENU;
 
-// Missile variables
+// Anti Missile variables
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
+
+// Enemy Missile variables
+int missileLevelCount; // Number of missiles to fire
+int missilesRemaining; // Number of missiles remaining to fire
+float missileSpeed = 0.5; // Speed of the missile
+float missileSpeedIncrement = 0.1; // Speed increment per level
+int missileDelay; // Delay between missiles
+int missileDelayMin = 1000; // Minimum delay in milliseconds (1 second)
+int missileDelayMax = 5000; // Maximum delay in milliseconds (5 second)
+int missilesDestroyed = 0; // Number of missiles destroyed
 
 // Level variables
 boolean newLevel = true;
@@ -33,10 +43,18 @@ void setupGame() {
 
   lastFireTime = millis();
 
+  // Generate missile count
+  missileLevelCount = generateLevelMissileCount(level);
+  missilesRemaining = missileLevelCount;
+  missileDelay = nextMissileDelay();
+  missilesDestroyed = 0;
+
   // Images
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
   destination = loadImage("images/destination.png");
+
+
 }
 
 void drawGame() {
@@ -48,14 +66,22 @@ void drawGame() {
     setupGameOver();
   }
 
-  // Level
+  // Level progression
   if (newLevel) {
-    spawnEnemyMissiles(level);
     newLevel = false;
+    missileLevelCount = generateLevelMissileCount(level);
+    missilesRemaining = missileLevelCount;
+    missileDelay = nextMissileDelay();
+  }
+
+  // Enemy missile generation
+  if (millis() > missileDelay && missilesRemaining > 0) {
+    missileDelay = nextMissileDelay();
+    shootMissiles(loadMissiles());
   }
 
   // Check if all missiles have been destroyed
-  if (enemyMissiles.size() == 0){
+  if (missilesDestroyed == missileLevelCount && enemyMissiles.size() == 0 && explosions.size() == 0 && antiMissiles.size() == 0){
     newLevel();
   }
 
@@ -93,6 +119,7 @@ void drawGame() {
       if (m.hasHitTarget()) {
         explosions.add(new Explosion(m.position.x, m.position.y, true));
         enemyMissiles.remove(i);
+        missilesDestroyed++;
         
         if (m.target instanceof Base) {
           Base b = (Base) m.target;
@@ -120,6 +147,7 @@ void drawGame() {
         enemyMissiles.remove(j);
         explosions.add(new Explosion(em.position.x, em.position.y, false));
         score += scoreMissile();
+        missilesDestroyed++;
       }
     }
 
@@ -210,14 +238,29 @@ Base getClosestBase() {
   return closestBase;
 }
 
-void spawnEnemyMissiles(int level) {
-  int missileCount = 4 + 1 * level;
+int generateLevelMissileCount(int level) {
+  return 5 + (level - 1) * 2;
+}
+
+int loadMissiles() {
+    int missiles = int(random(1, missilesRemaining));
+    missilesRemaining -= missiles;
+    if (debug) println("Missiles remaining: " + missilesRemaining + " Missiles loaded: " + missiles);
+    return missiles;
+}
+
+void shootMissiles(int count) {
+  int missileCount = count;
   for (int i = 0; i < missileCount; i++) {
     Target t = pickValidTarget();
     float r = random(width);
-    float speed = 0.5 + ((level - 1) * 0.1);
+    float speed = missileSpeed + ((level - 1) * missileSpeedIncrement);
     enemyMissiles.add(new Missile(r, 0, t, speed, true)); 
   }
+}
+
+int nextMissileDelay() {
+  return millis() + (int) random(missileDelayMin, missileDelayMax);
 }
 
 // This function picks a random target that has not been selected yet
