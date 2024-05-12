@@ -163,7 +163,7 @@ void draw() {
       drawGameOver();
       break;
     case PAUSE:
-      //drawPause();
+      drawPause();
       break;
   }
 }
@@ -171,7 +171,13 @@ void draw() {
 void keyPressed() {
   if (key == ESC) {
     key = 0; // Prevent default behavior
-    currentState = GameState.MENU;
+
+    if (currentState == GameState.PAUSE) {
+      currentState = GameState.GAME;
+    } else if (currentState == GameState.GAME) {
+      currentState = GameState.PAUSE;
+      setupPause();
+    }
   }
 }
 
