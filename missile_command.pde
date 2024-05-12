@@ -42,10 +42,6 @@ void setupGame() {
 void drawGame() {
   image(background, 0, 0);
 
-  // Crosshair
-  noCursor();
-  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
-
    // Check if all cities have been destroyed
   if (checkGameOver()) {
     currentState = GameState.GAME_OVER;
@@ -63,17 +59,7 @@ void drawGame() {
     newLevel();
   }
 
-
-  // Environment
-  for (Base b : bases) {
-    b.display();
-  }
-
-  for (City c : cities) {
-    c.display();
-  }
-
-  // Anti-missiles
+   // Anti-missiles
   for (int i = antiMissiles.size() - 1; i >= 0; i--) {
     Missile m = antiMissiles.get(i);
     m.update();
@@ -84,6 +70,16 @@ void drawGame() {
       explosions.add(new Explosion(m.position.x, m.position.y, false));
       antiMissiles.remove(i);
     }
+  }
+
+
+  // Environment
+  for (Base b : bases) {
+    b.display();
+  }
+
+  for (City c : cities) {
+    c.display();
   }
 
   // Enemy missiles
@@ -138,6 +134,10 @@ void drawGame() {
       closestBase.fire();
     }
   }
+
+  // Crosshair
+  noCursor();
+  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
 
 
   displayScoreboard();
