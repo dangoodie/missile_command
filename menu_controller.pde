@@ -2,11 +2,9 @@ import processing.sound.*;
 
 Button startButton;
 Button quitButton;
-SoundFile menu_music, start_sound;
 
 void setupMenu() {
-  menu_music = new SoundFile(this, "menu-music.wav");
-  start_sound = new SoundFile(this, "game-start-sound.wav");
+
   
   // Start button
   startButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "Start", () -> {   

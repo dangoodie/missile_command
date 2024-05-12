@@ -1,5 +1,5 @@
 PImage background, crosshair, destination;
-SoundFile lazer, game_bground_music;
+SoundFile lazer, game_bground_music, menu_music, start_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -51,13 +51,6 @@ void setupGame() {
   missilesRemaining = missileLevelCount;
   missileDelay = nextMissileDelay();
   missilesDestroyed = 0;
-
-  // Images
-  background = loadImage("images/background.png");
-  crosshair = loadImage("images/crosshair.png");
-  destination = loadImage("images/destination.png");
-
-
 }
 
 void drawGame() {
@@ -66,7 +59,6 @@ void drawGame() {
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
   }
-  game_bground_music.amp(0.2); // Raise volume back up after exiting pause menu
 
    // Check if all cities have been destroyed
   if (checkGameOver()) {
@@ -169,13 +161,13 @@ void drawGame() {
     Base closestBase = getClosestBase();
     if (closestBase != null) {
       closestBase.fire();
+      SoundController(lazer, 0.2, false);
     }
   }
 
   // Crosshair
   noCursor();
   image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
-
 
   displayScoreboard();
   updateHighScore();
@@ -184,6 +176,17 @@ void drawGame() {
 // Main functions
 void setup() {
   size(800, 600);
+    // Images
+  background = loadImage("images/background.png");
+  crosshair = loadImage("images/crosshair.png");
+  destination = loadImage("images/destination.png");
+
+  // Sounds
+  menu_music = new SoundFile(this, "sounds/menu-music.wav");
+  start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
+  lazer = new SoundFile(this, "sounds/powerful-laser.wav");
+  game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
+
   setupMenu();
   frameRate(60);
 }
