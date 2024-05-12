@@ -363,4 +363,3 @@ void updateHighScore() {
 int scoreMissile() {
   return 100 + 100 * ((level - 1) / 2);
 }
-
