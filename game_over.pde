@@ -1,4 +1,3 @@
-// Game over helper functions
 Button newGameButton;
 Button menuButton;
 
@@ -35,4 +34,15 @@ void drawGameOver() {
   // Display buttons
   newGameButton.display();
   menuButton.display();
+}
+
+// Game over helper functions
+
+boolean checkGameOver() {
+  for (City city : cities) {
+    if (city.isAlive()) {
+      return false;
+    }
+  }
+  return true;
 }

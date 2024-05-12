@@ -1,7 +1,7 @@
 class Explosion {
   PVector position;
   float size = 0;
-  float lifespan = 50;
+  float lifespan;
   boolean isEnemy;
 
   Explosion(float x, float y, boolean isEnemy) {
@@ -10,6 +10,12 @@ class Explosion {
   }
 
   void update() {
+
+    if (isEnemy) {
+      lifespan = 30;
+    } else {
+      lifespan = 50;
+    }
     lifespan -= 1;
     size += 2; // Increase the size of the explosion
   }

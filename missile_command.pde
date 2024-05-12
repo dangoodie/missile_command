@@ -46,16 +46,16 @@ void drawGame() {
   noCursor();
   image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
 
+   // Check if all cities have been destroyed
+  if (checkGameOver()) {
+    currentState = GameState.GAME_OVER;
+    setupGameOver();
+  }
+
   // Level
   if (newLevel) {
     spawnEnemyMissiles(level);
     newLevel = false;
-  }
-
-  // Check if all cities have been destroyed
-  if (cities.size() == 0) {
-    currentState = GameState.GAME_OVER;
-    setupGameOver();
   }
 
   // Check if all missiles have been destroyed
