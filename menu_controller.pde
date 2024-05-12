@@ -22,7 +22,7 @@ void setupMenu() {
   
   menu_music = new SoundFile(this, "menu-music.wav");
   
-  SoundController(menu_music, 0.1);
+  SoundController(menu_music, 0.1, true);
 }
 
 void drawMenu() {

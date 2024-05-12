@@ -46,7 +46,7 @@ void setupGame() {
   
   if (menu_music.isPlaying()) {
     menu_music.stop();}
-  SoundController(start_sound, 0.4);
+  SoundController(start_sound, 0.4, false);
 }
 
 void drawGame() {
@@ -142,7 +142,7 @@ void drawGame() {
     Base closestBase = getClosestBase();
     if (closestBase != null) {
       closestBase.fire();
-      SoundController(lazer, 0.1);
+      SoundController(lazer, 0.1, false);
     }
   }
 

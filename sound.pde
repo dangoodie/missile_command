@@ -1,7 +1,13 @@
-void SoundController(SoundFile sound, float volume) {
+void SoundController(SoundFile sound, float volume, boolean loop) {
   if (sound.isPlaying()) {
     sound.stop();
   }
-  sound.play();
-  sound.amp(volume);
+  if (loop == true) {
+    sound.loop();
+    sound.amp(volume);
+  }
+  if (loop == false) {
+    sound.play();
+    sound.amp(volume);
+  }
 }
