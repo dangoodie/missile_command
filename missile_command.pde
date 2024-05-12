@@ -1,4 +1,7 @@
+import processing.sound.*;
+
 PImage background, crosshair, destination;
+SoundFile lazer, game_bground_music;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -18,6 +21,8 @@ int level = 1;
 // Score variables
 int score = 0;
 int highScore = 0;
+
+int game_start_time;
 
 void setupGame() {
   bases.add(new Base(100, height - 50));
@@ -41,7 +46,12 @@ void setupGame() {
 
 void drawGame() {
   image(background, 0, 0);
-
+  
+  if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
+    SoundController(game_bground_music, 0.2, true); 
+  }
+  game_bground_music.amp(0.2); // Raise volume back up after exiting pause menu
+  
    // Check if all cities have been destroyed
   if (checkGameOver()) {
     currentState = GameState.GAME_OVER;
@@ -132,6 +142,7 @@ void drawGame() {
     Base closestBase = getClosestBase();
     if (closestBase != null) {
       closestBase.fire();
+      SoundController(lazer, 0.3, false);
     }
   }
 
@@ -149,6 +160,9 @@ void setup() {
   size(800, 600);
   setupMenu();
   frameRate(60);
+  
+  game_bground_music = new SoundFile(this, "background-music-1.wav");
+  lazer = new SoundFile(this, "powerful-laser.wav");
 }
 
 void draw() {
@@ -283,6 +297,7 @@ void newLevel() {
 void newGame() {
   level = 1;
   score = 0;
+  game_start_time = millis();
   newLevel = true;
   enemyMissiles.clear();
   antiMissiles.clear();
@@ -311,4 +326,3 @@ void updateHighScore() {
 int scoreMissile() {
   return 100 + 100 * ((level - 1) / 2);
 }
-
