@@ -3,7 +3,7 @@ Button menuButton;
 
 void setupGameOver() {
   // New Game button
-  newGameButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "New Game", () -> {   
+  newGameButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "New Game", () -> {   
     currentState = GameState.GAME;
     newGame();
   });
@@ -11,7 +11,7 @@ void setupGameOver() {
   newGameButton.bgHoverColor = color(71,159,120);
 
   // Menu button
-  menuButton = new Button(width/2 - 100, height/2 + 20, 200, 50, "Menu", () -> {
+  menuButton = new Button(width/2 - 100, height/2 + 30, 200, 50, "Menu", () -> {
     currentState = GameState.MENU;
     setupMenu();
   });
@@ -30,7 +30,7 @@ void drawGameOver() {
   textAlign(CENTER, CENTER);
   text("Game Over", width / 2, height / 2 - 150);
   textSize(20);
-  text("Score: " + score, width / 2, height / 2 - 120);
+  text("Score: " + score, width / 2, height / 2 - 70);
   text("High Score: " + highScore, width / 2, height / 2 - 100);
 
   // Display buttons
