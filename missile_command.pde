@@ -274,6 +274,18 @@ void newLevel() {
   setupGame();
 }
 
+void newGame() {
+  level = 1;
+  score = 0;
+  newLevel = true;
+  enemyMissiles.clear();
+  antiMissiles.clear();
+  explosions.clear();
+  bases.clear();
+  cities.clear();
+  setupGame();
+}
+
 // Scoreboard helper functions
 
 int scoreOffset = 8;

@@ -5,7 +5,7 @@ void setupGameOver() {
   // New Game button
   newGameButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "New Game", () -> {   
     currentState = GameState.GAME;
-    setupGame();
+    newGame();
   });
   newGameButton.bgColor = color(70, 195, 76);
   newGameButton.bgHoverColor = color(71,159,120);
