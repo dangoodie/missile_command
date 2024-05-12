@@ -30,7 +30,7 @@ void setupGame() {
   // Images
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
-  //destination = loadImage("images/destination.png"); TODO: Implement this later
+  destination = loadImage("images/destination.png");
 }
 
 void drawGame() {
