@@ -21,6 +21,15 @@ void setupMenu() {
 void drawMenu() {
   background(0);
   cursor();
+
+  fill(255);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text("Missile Command", width/2, height/2 - 150);
+
+  // highScore
+  textSize(20);
+  text("High Score: " + highScore, width/2, height/2 - 100);
   
   startButton.display();
   quitButton.display();
