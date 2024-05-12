@@ -1,7 +1,7 @@
 import processing.sound.*;
 
 PImage background, crosshair, destination;
-SoundFile lazer;
+SoundFile lazer, start_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -42,6 +42,11 @@ void setupGame() {
   destination = loadImage("images/destination.png");
   
   lazer = new SoundFile(this, "powerful-laser.wav");
+  start_sound = new SoundFile(this, "game-start-sound.wav");
+  
+  if (menu_music.isPlaying()) {
+    menu_music.stop();}
+  SoundController(start_sound, 0.4);
 }
 
 void drawGame() {
@@ -134,10 +139,10 @@ void drawGame() {
 
   if (mousePressed && millis() - lastFireTime > fireDelay) {
     lastFireTime = millis();
-    SoundController(lazer, 0.1);
     Base closestBase = getClosestBase();
     if (closestBase != null) {
       closestBase.fire();
+      SoundController(lazer, 0.1);
     }
   }
 

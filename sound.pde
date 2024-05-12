@@ -3,5 +3,5 @@ void SoundController(SoundFile sound, float volume) {
     sound.stop();
   }
   sound.play();
-  lazer.amp(volume);
+  sound.amp(volume);
 }

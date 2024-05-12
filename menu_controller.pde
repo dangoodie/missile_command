@@ -1,5 +1,8 @@
+import processing.sound.*;
+
 Button startButton;
 Button quitButton;
+SoundFile menu_music;
 
 void setupMenu() {
   // Start button
@@ -16,6 +19,10 @@ void setupMenu() {
   });
   quitButton.bgColor = color(70,195,76);
   quitButton.bgHoverColor = color(71,159,120);
+  
+  menu_music = new SoundFile(this, "menu-music.wav");
+  
+  SoundController(menu_music, 0.1);
 }
 
 void drawMenu() {
