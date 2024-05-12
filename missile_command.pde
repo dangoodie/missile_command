@@ -6,12 +6,18 @@ ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // Set this to true to enable debugging features
 GameState currentState = GameState.MENU;
+
+// Missile variables
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
 // Level variables
 boolean newLevel = true;
 int level = 1;
+
+// Score variables
+int score = 0;
+int highScore = 0;
 
 void setupGame() {
   bases.add(new Base(100, height - 50));
@@ -36,9 +42,11 @@ void setupGame() {
 void drawGame() {
   image(background, 0, 0);
 
-  // Crosshair
-  noCursor();
-  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+   // Check if all cities have been destroyed
+  if (checkGameOver()) {
+    currentState = GameState.GAME_OVER;
+    setupGameOver();
+  }
 
   // Level
   if (newLevel) {
@@ -51,17 +59,7 @@ void drawGame() {
     newLevel();
   }
 
-
-  // Environment
-  for (Base b : bases) {
-    b.display();
-  }
-
-  for (City c : cities) {
-    c.display();
-  }
-
-  // Anti-missiles
+   // Anti-missiles
   for (int i = antiMissiles.size() - 1; i >= 0; i--) {
     Missile m = antiMissiles.get(i);
     m.update();
@@ -72,6 +70,16 @@ void drawGame() {
       explosions.add(new Explosion(m.position.x, m.position.y, false));
       antiMissiles.remove(i);
     }
+  }
+
+
+  // Environment
+  for (Base b : bases) {
+    b.display();
+  }
+
+  for (City c : cities) {
+    c.display();
   }
 
   // Enemy missiles
@@ -110,6 +118,7 @@ void drawGame() {
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
         em.death();
         enemyMissiles.remove(j);
+        score += scoreMissile();
       }
     }
 
@@ -125,6 +134,14 @@ void drawGame() {
       closestBase.fire();
     }
   }
+
+  // Crosshair
+  noCursor();
+  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+
+
+  displayScoreboard();
+  updateHighScore();
 }
 
 // Main functions
@@ -142,13 +159,25 @@ void draw() {
     case GAME:
       drawGame();
       break;
+    case GAME_OVER:
+      drawGameOver();
+      break;
+    case PAUSE:
+      drawPause();
+      break;
   }
 }
 
 void keyPressed() {
   if (key == ESC) {
     key = 0; // Prevent default behavior
-    currentState = GameState.MENU;
+
+    if (currentState == GameState.PAUSE) {
+      currentState = GameState.GAME;
+    } else if (currentState == GameState.GAME) {
+      currentState = GameState.PAUSE;
+      setupPause();
+    }
   }
 }
 
@@ -185,29 +214,58 @@ void spawnEnemyMissiles(int level) {
   for (int i = 0; i < missileCount; i++) {
     Target t = pickValidTarget();
     float r = random(width);
-    float speed = 1;
+    float speed = 0.5 + ((level - 1) * 0.1);
     enemyMissiles.add(new Missile(r, 0, t, speed, true)); 
   }
 }
 
-Target pickValidTarget() {
-  ArrayList<Target> targets = new ArrayList<Target>();
+// This function picks a random target that has not been selected yet
+// If all targets have been selected, it clears the selected targets and picks a new target
 
+ArrayList<Target> selectedTargets = new ArrayList<Target>();
+
+Target pickValidTarget() {
+  ArrayList<Target> validTargets = new ArrayList<Target>();
+
+  // Collect all alive targets from bases and cities
   for (int i = 0; i < bases.size(); i++) {
     if (bases.get(i).isAlive()) {
-      targets.add(bases.get(i));
+      validTargets.add(bases.get(i));
     }
   }
 
   for (int i = 0; i < cities.size(); i++) {
     if (cities.get(i).isAlive()) {
-      targets.add(cities.get(i));
+      validTargets.add(cities.get(i));
     }
   }
 
-  int selection = int(random(targets.size()));
-  return targets.get(selection);
+  // Filter to get only unselected targets
+  ArrayList<Target> unselectedTargets = new ArrayList<Target>();
+  for (Target t : validTargets) {
+    if (!selectedTargets.contains(t)) {
+      unselectedTargets.add(t);
+    }
+  }
+
+  // Reset if all targets were selected
+  if (unselectedTargets.isEmpty() && !validTargets.isEmpty()) {
+    selectedTargets.clear();
+    unselectedTargets.addAll(validTargets);  // Use addAll for efficiency
+  }
+
+  // If there are no unselected targets and no valid targets, return null
+  if (unselectedTargets.isEmpty()) {
+    return null;
+  }
+
+  // Correct the selection index to use the size of unselectedTargets
+  int selection = (int) random(unselectedTargets.size());
+  Target selected = unselectedTargets.get(selection);
+  selectedTargets.add(selected);
+  return selected;
 }
+
 
 // New level helper functions
 
@@ -221,3 +279,36 @@ void newLevel() {
   cities.clear();
   setupGame();
 }
+
+void newGame() {
+  level = 1;
+  score = 0;
+  newLevel = true;
+  enemyMissiles.clear();
+  antiMissiles.clear();
+  explosions.clear();
+  bases.clear();
+  cities.clear();
+  setupGame();
+}
+
+// Scoreboard helper functions
+
+int scoreOffset = 8;
+void displayScoreboard() {
+  fill(255);
+  textSize(20);
+  textAlign(RIGHT, TOP);
+  text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
+}
+
+void updateHighScore() {
+  if (score > highScore) {
+    highScore = score;
+  }
+}
+
+int scoreMissile() {
+  return 100 + 100 * ((level - 1) / 2);
+}
+

@@ -27,6 +27,7 @@ class Button {
     }
 
     // Draw button with rounded corners
+    noStroke();
     rect(x, y, w, h, 10);
     fill(textColor);
 
@@ -43,6 +44,7 @@ class Button {
   void checkClick() {
     if (overButton() && mousePressed) {
       action.run();
+      mousePressed = false;
     }
   }
 }

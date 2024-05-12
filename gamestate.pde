@@ -1,3 +1,3 @@
 enum GameState {
-  MENU, GAME
+  MENU, GAME, GAME_OVER, PAUSE
 }

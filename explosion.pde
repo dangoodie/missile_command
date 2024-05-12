@@ -1,12 +1,17 @@
 class Explosion {
   PVector position;
   float size = 0;
-  float lifespan = 50;
+  float lifespan;
   boolean isEnemy;
 
   Explosion(float x, float y, boolean isEnemy) {
     position = new PVector(x, y);
     this.isEnemy = isEnemy;
+    if (isEnemy) {
+      lifespan = 30;
+    } else {
+      lifespan = 50;
+    }
   }
 
   void update() {
