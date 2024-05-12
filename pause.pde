@@ -2,6 +2,7 @@ Button resumeButton;
 Button returnMenuButton;
 
 void setupPause() {
+  game_bground_music.amp(0.05);
   // Resume
   resumeButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "Resume", () -> {   
     currentState = GameState.GAME;

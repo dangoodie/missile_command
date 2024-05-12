@@ -1,4 +1,5 @@
 PImage background, crosshair, destination;
+SoundFile lazer, game_bground_music;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -28,6 +29,8 @@ int level = 1;
 // Score variables
 int score = 0;
 int highScore = 0;
+
+int game_start_time;
 
 void setupGame() {
   bases.add(new Base(100, height - 50));
@@ -59,6 +62,11 @@ void setupGame() {
 
 void drawGame() {
   image(background, 0, 0);
+
+  if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
+    SoundController(game_bground_music, 0.2, true); 
+  }
+  game_bground_music.amp(0.2); // Raise volume back up after exiting pause menu
 
    // Check if all cities have been destroyed
   if (checkGameOver()) {
