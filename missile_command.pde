@@ -9,9 +9,9 @@ GameState currentState = GameState.MENU;
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
-// TODO: Change this later with level switching logic
+// Level variables
 boolean newLevel = true;
-int level = 0;
+int level = 1;
 
 void setupGame() {
   bases.add(new Base(100, height - 50));
@@ -45,6 +45,12 @@ void drawGame() {
     spawnEnemyMissiles(level);
     newLevel = false;
   }
+
+  // Check if all missiles have been destroyed
+  if (enemyMissiles.size() == 0){
+    newLevel();
+  }
+
 
   // Environment
   for (Base b : bases) {
@@ -103,6 +109,7 @@ void drawGame() {
 
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
         em.death();
+        enemyMissiles.remove(j);
       }
     }
 
@@ -145,6 +152,8 @@ void keyPressed() {
   }
 }
 
+// Enemy missile helper functions
+
 Base getClosestBase() {
   Base closestBase = null;
   float closestDistance = Float.MAX_VALUE;
@@ -172,8 +181,8 @@ Base getClosestBase() {
 }
 
 void spawnEnemyMissiles(int level) {
-  // TODO: Implement level logic
-  for (int i = 0; i < 6; i++) {
+  int missileCount = 4 + 1 * level;
+  for (int i = 0; i < missileCount; i++) {
     Target t = pickValidTarget();
     float r = random(width);
     float speed = 1;
@@ -198,4 +207,17 @@ Target pickValidTarget() {
 
   int selection = int(random(targets.size()));
   return targets.get(selection);
+}
+
+// New level helper functions
+
+void newLevel() {
+  level++;
+  newLevel = true;
+  enemyMissiles.clear();
+  antiMissiles.clear();
+  explosions.clear();
+  bases.clear();
+  cities.clear();
+  setupGame();
 }
