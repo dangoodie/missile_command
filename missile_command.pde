@@ -4,7 +4,7 @@ ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
-boolean debug = true; // Set this to true to enable debugging features
+boolean debug = false; // Set this to true to enable debugging features
 GameState currentState = GameState.MENU;
 
 // Anti Missile variables
