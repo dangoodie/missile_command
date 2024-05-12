@@ -6,12 +6,17 @@ ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // Set this to true to enable debugging features
 GameState currentState = GameState.MENU;
+
+// Missile variables
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
 // Level variables
 boolean newLevel = true;
 int level = 1;
+
+// Score variables
+int score = 0;
 
 void setupGame() {
   bases.add(new Base(100, height - 50));
@@ -110,6 +115,7 @@ void drawGame() {
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
         em.death();
         enemyMissiles.remove(j);
+        score += scoreMissile();
       }
     }
 
@@ -125,6 +131,8 @@ void drawGame() {
       closestBase.fire();
     }
   }
+
+  displayScoreboard();
 }
 
 // Main functions
@@ -220,4 +228,18 @@ void newLevel() {
   bases.clear();
   cities.clear();
   setupGame();
+}
+
+// Scoreboard helper functions
+
+int scoreOffset = 8;
+void displayScoreboard() {
+  fill(255);
+  textSize(20);
+  textAlign(RIGHT, TOP);
+  text("Level: " + level + "\nScore: " + score + width-scoreOffset, 0+scoreOffset);
+}
+
+int scoreMissile() {
+  return 100 + 100 * (level/2);
 }
