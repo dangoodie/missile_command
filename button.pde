@@ -28,6 +28,7 @@ class Button {
 
     // Draw button with rounded corners
     noStroke();
+    smooth();
     rect(x, y, w, h, 10);
     fill(textColor);
 

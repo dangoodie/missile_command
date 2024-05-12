@@ -10,7 +10,7 @@ void setupPause() {
   resumeButton.bgHoverColor = color(71,159,120);
 
   // Return to Menu button
-  returnMenuButton = new Button(width/2 - 100, height/2 + 30, 200, 50, "Return To Menu", () -> {
+  returnMenuButton = new Button(width/2 - 100, height/2 + 30, 200, 50, "Quit To Menu", () -> {
     currentState = GameState.MENU;
     setupMenu();
   });

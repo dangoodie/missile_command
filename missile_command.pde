@@ -118,6 +118,7 @@ void drawGame() {
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
         em.death();
         enemyMissiles.remove(j);
+        explosions.add(new Explosion(em.position.x, em.position.y, false));
         score += scoreMissile();
       }
     }
