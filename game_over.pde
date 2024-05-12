@@ -12,7 +12,8 @@ void setupGameOver() {
 
   // Menu button
   menuButton = new Button(width/2 - 100, height/2 + 20, 200, 50, "Menu", () -> {
-    exit();
+    currentState = GameState.MENU;
+    setupMenu();
   });
   menuButton.bgColor = color(70,195,76);
   menuButton.bgHoverColor = color(71,159,120);
@@ -20,20 +21,23 @@ void setupGameOver() {
 
 void drawGameOver() {
    // display game over screen
+  cursor();
   fill(0, 100);
   rect(0, 0, width, height);
 
   fill(255);
   textSize(50);
   textAlign(CENTER, CENTER);
-  text("Game Over", width / 2, height / 2 - 50);
+  text("Game Over", width / 2, height / 2 - 150);
   textSize(20);
-  text("Score: " + score, width / 2, height / 2);
-  text("High Score: " + highScore, width / 2, height / 2 + 30);
+  text("Score: " + score, width / 2, height / 2 - 120);
+  text("High Score: " + highScore, width / 2, height / 2 - 100);
 
   // Display buttons
   newGameButton.display();
   menuButton.display();
+  newGameButton.checkClick();
+  menuButton.checkClick();
 }
 
 // Game over helper functions

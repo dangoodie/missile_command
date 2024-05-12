@@ -44,6 +44,7 @@ class Button {
   void checkClick() {
     if (overButton() && mousePressed) {
       action.run();
+      mousePressed = false;
     }
   }
 }
