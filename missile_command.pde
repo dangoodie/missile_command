@@ -237,9 +237,9 @@ void displayScoreboard() {
   fill(255);
   textSize(20);
   textAlign(RIGHT, TOP);
-  text("Level: " + level + "\nScore: " + score + width-scoreOffset, 0+scoreOffset);
+  text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
 }
 
 int scoreMissile() {
-  return 100 + 100 * (level/2);
+  return 100 + 100 * ((level - 1) / 2);
 }
