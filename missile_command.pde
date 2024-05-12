@@ -193,7 +193,7 @@ void spawnEnemyMissiles(int level) {
   for (int i = 0; i < missileCount; i++) {
     Target t = pickValidTarget();
     float r = random(width);
-    float speed = 1;
+    float speed = 0.5 + ((level - 1) * 0.1);
     enemyMissiles.add(new Missile(r, 0, t, speed, true)); 
   }
 }
