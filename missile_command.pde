@@ -1,7 +1,7 @@
 import processing.sound.*;
 
 PImage background, crosshair, destination;
-SoundFile lazer, start_sound, game_bground_music;
+SoundFile lazer, game_bground_music;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -42,22 +42,12 @@ void setupGame() {
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
   destination = loadImage("images/destination.png");
-  
-  lazer = new SoundFile(this, "powerful-laser.wav");
-  start_sound = new SoundFile(this, "game-start-sound.wav");
-  game_bground_music = new SoundFile(this, "background-music-1.wav");
-  
-  game_start_time = millis();
-  
-  if (menu_music.isPlaying()) {
-    menu_music.stop();}
-  SoundController(start_sound, 0.4, false);
 }
 
 void drawGame() {
   image(background, 0, 0);
   
-  if (millis() > game_start_time + 5000 && !game_bground_music.isPlaying() ) {
+  if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
   }
   game_bground_music.amp(0.2); // Raise volume back up after exiting pause menu
@@ -170,6 +160,9 @@ void setup() {
   size(800, 600);
   setupMenu();
   frameRate(60);
+  
+  game_bground_music = new SoundFile(this, "background-music-1.wav");
+  lazer = new SoundFile(this, "powerful-laser.wav");
 }
 
 void draw() {
@@ -304,6 +297,7 @@ void newLevel() {
 void newGame() {
   level = 1;
   score = 0;
+  game_start_time = millis();
   newLevel = true;
   enemyMissiles.clear();
   antiMissiles.clear();

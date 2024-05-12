@@ -2,12 +2,17 @@ import processing.sound.*;
 
 Button startButton;
 Button quitButton;
-SoundFile menu_music;
+SoundFile menu_music, start_sound;
 
 void setupMenu() {
+  menu_music = new SoundFile(this, "menu-music.wav");
+  start_sound = new SoundFile(this, "game-start-sound.wav");
+  
   // Start button
   startButton = new Button(width/2 - 100, height/2 - 50, 200, 50, "Start", () -> {   
     currentState = GameState.GAME;
+    menu_music.stop();
+    SoundController(start_sound, 0.4, false);
     newGame();
   });
   startButton.bgColor = color(70, 195, 76);
@@ -19,8 +24,6 @@ void setupMenu() {
   });
   quitButton.bgColor = color(70,195,76);
   quitButton.bgHoverColor = color(71,159,120);
-  
-  menu_music = new SoundFile(this, "menu-music.wav");
   
   SoundController(menu_music, 0.1, true);
 }
