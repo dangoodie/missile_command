@@ -1,5 +1,6 @@
 PImage background, crosshair, destination;
-SoundFile lazer, game_bground_music, menu_music, start_sound;
+SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
+SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -93,6 +94,7 @@ void drawGame() {
     m.showDestination();
 
     if (m.hasHitTarget()) {
+      SoundController(explosion_sound, 0.3, false);
       explosions.add(new Explosion(m.position.x, m.position.y, false));
       antiMissiles.remove(i);
     }
@@ -118,6 +120,7 @@ void drawGame() {
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
         explosions.add(new Explosion(m.position.x, m.position.y, true));
+        SoundController(base_destroyed_sound, 0.3, false); 
         enemyMissiles.remove(i);
         missilesDestroyed++;
         
@@ -143,6 +146,7 @@ void drawGame() {
       Missile em = enemyMissiles.get(j);
 
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
+        SoundController(enemy_explode_sound, 0.8, false);
         em.death();
         enemyMissiles.remove(j);
         explosions.add(new Explosion(em.position.x, em.position.y, false));
@@ -186,6 +190,13 @@ void setup() {
   start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
   lazer = new SoundFile(this, "sounds/powerful-laser.wav");
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
+  game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
+  explosion_sound = new SoundFile(this, "sounds/explosion.wav");
+  // A couple of options for the explosion sound. 1 doesn't really work, but 2 and 3 are good
+  enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav");
+  // placeholder base destroyed sound. Not super happy with it. Searching for a new one.
+  base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav");
+
 
   setupMenu();
   frameRate(60);
@@ -338,6 +349,7 @@ void newLevel() {
 void newGame() {
   level = 1;
   score = 0;
+  game_start_time = millis();
   newLevel = true;
   enemyMissiles.clear();
   antiMissiles.clear();
