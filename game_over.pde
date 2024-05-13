@@ -21,18 +21,19 @@ void setupGameOver() {
 
 void drawGameOver() {
    // display game over screen
+  pg.beginDraw();
   cursor();
-  fill(0, 100);
-  rect(0, 0, width, height);
+  pg.fill(0, 100);
+  pg.rect(0, 0, width, height);
 
-  fill(255);
-  textSize(50);
-  textAlign(CENTER, CENTER);
-  text("Game Over", width / 2, height / 2 - 150);
-  textSize(20);
-  text("Score: " + score, width / 2, height / 2 - 70);
-  text("High Score: " + highScore, width / 2, height / 2 - 100);
-
+  pg.fill(255);
+  pg.textSize(50);
+  pg.textAlign(CENTER, CENTER);
+  pg.text("Game Over", width / 2, height / 2 - 150);
+  pg.textSize(20);
+  pg.text("Score: " + score, width / 2, height / 2 - 70);
+  pg.text("High Score: " + highScore, width / 2, height / 2 - 100);
+  pg.endDraw();
   // Display buttons
   newGameButton.display();
   menuButton.display();

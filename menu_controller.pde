@@ -27,18 +27,20 @@ void setupMenu() {
 }
 
 void drawMenu() {
-  background(0);
+  pg.beginDraw();
+  pg.background(0);
   cursor();
 
-  fill(255);
-  textSize(50);
-  textAlign(CENTER, CENTER);
-  text("Missile Command", width/2, height/2 - 150);
+  pg.fill(255);
+  pg.textSize(50);
+  pg.textAlign(CENTER, CENTER);
+  pg.text("Missile Command", width/2, height/2 - 150);
 
   // highScore
-  textSize(20);
-  text("High Score: " + highScore, width/2, height/2 - 100);
+  pg.textSize(20);
+  pg.text("High Score: " + highScore, width/2, height/2 - 100);
   
+  pg.endDraw();
   startButton.display();
   quitButton.display();
   startButton.checkClick();

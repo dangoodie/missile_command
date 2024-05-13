@@ -20,21 +20,23 @@ class Button {
   }
 
   void display() {
+    pg.beginDraw();
     if (this.overButton()) {
-      fill(bgHoverColor);
+      pg.fill(bgHoverColor);
     } else {
-      fill(bgColor);  
+      pg.fill(bgColor);  
     }
 
     // Draw button with rounded corners
-    noStroke();
-    smooth();
-    rect(x, y, w, h, 10);
-    fill(textColor);
+    pg.noStroke();
+    pg.smooth();
+    pg.rect(x, y, w, h, 10);
+    pg.fill(textColor);
 
-    textSize(textSize);
-    textAlign(CENTER, CENTER);
-    text(label, x + w/2, y + h/2);
+    pg.textSize(textSize);
+    pg.textAlign(CENTER, CENTER);
+    pg.text(label, x + w/2, y + h/2);
+    pg.endDraw();
   }
 
   boolean overButton() {

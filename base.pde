@@ -16,18 +16,20 @@ class Base implements Target {
   }
 
   void display() {
+    pg.beginDraw();
     if (isAlive) {
       // Drawing the base
-      fill(0, 255, 0);
-      noStroke();
-      ellipse(position.x, position.y, 20, 20);
+      pg.fill(0, 255, 0);
+      pg.noStroke();
+      pg.ellipse(position.x, position.y, 20, 20);
 
       // Displaying the ammo
-      fill(255);
-      text(ammo, position.x, position.y + 20);
+      pg.fill(255);
+      pg.text(ammo, position.x, position.y + 20);
     } else {
       // display destroyed base
     }
+    pg.endDraw();
   }
 
   void destroy() {

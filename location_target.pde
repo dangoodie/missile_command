@@ -7,8 +7,9 @@ class LocationTarget implements Target {
 
   void display() {
     // Uncomment when you have a destination image
-    image(destination, position.x - destination.width / 224, position.y - destination.height / 224, destination.width / 112, destination.width / 112);
-
+    pg.beginDraw();
+    pg.image(destination, position.x - destination.width / 224, position.y - destination.height / 224, destination.width / 112, destination.width / 112);
+    pg.endDraw();
   }
 
   PVector getPosition() {

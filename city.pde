@@ -9,9 +9,11 @@ class City implements Target {
 
   void display() {
     if (isAlive) {
-      fill(255);
-      stroke(0);
-      ellipse(position.x, position.y, 8, 8);
+      pg.beginDraw();
+      pg.fill(255);
+      pg.stroke(0);
+      pg.ellipse(position.x, position.y, 8, 8);
+      pg.endDraw();
     } else {
       // display destroyed city
     }

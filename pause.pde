@@ -19,21 +19,25 @@ void setupPause() {
   returnMenuButton.bgHoverColor = color(71,159,120);
   
   // darken background
-  fill(0, 127);
-  rect(0, 0, width, height);
+  pg.beginDraw();
+  pg.fill(0, 127);
+  pg.rect(0, 0, width, height);
+  pg.endDraw();
 }
 
 void drawPause() {
    // display game over screen
+  pg.beginDraw();
   cursor();
 
-  fill(255);
-  textSize(50);
-  textAlign(CENTER, CENTER);
-  text("Pause", width / 2, height / 2 - 150);
-  textSize(20);
-  text("Score: " + score, width / 2, height / 2 - 70);
-  text("High Score: " + highScore, width / 2, height / 2 - 100);
+  pg.fill(255);
+  pg.textSize(50);
+  pg.textAlign(CENTER, CENTER);
+  pg.text("Pause", width / 2, height / 2 - 150);
+  pg.textSize(20);
+  pg.text("Score: " + score, width / 2, height / 2 - 70);
+  pg.text("High Score: " + highScore, width / 2, height / 2 - 100);
+  pg.endDraw();
 
   // Display buttons
  resumeButton.display();

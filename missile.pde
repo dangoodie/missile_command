@@ -24,17 +24,18 @@ class Missile {
 
   void display() {
     if (isAlive) {
-
+      pg.beginDraw();
       if (isEnemy) {
-        stroke(255, 0, 0); // Red
+        pg.stroke(255, 0, 0); // Red
       } else {
-        stroke(0, 0, 255); // Blue
+        pg.stroke(0, 0, 255); // Blue
       }
-      strokeWeight(1);
-      line(startingPosition.x, startingPosition.y, position.x, position.y);
-      noStroke();
-      fill(255);
-      ellipse(position.x, position.y, 2, 2);
+      pg.strokeWeight(1);
+      pg.line(startingPosition.x, startingPosition.y, position.x, position.y);
+      pg.noStroke();
+      pg.fill(255);
+      pg.ellipse(position.x, position.y, 2, 2);
+      pg.endDraw();
     }
   }
 

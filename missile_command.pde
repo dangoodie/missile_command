@@ -30,6 +30,12 @@ int level = 1;
 int score = 0;
 int highScore = 0;
 
+// Glow Effect
+PGraphics pg;
+PImage glowImage;
+int glowEffectAmount = 127; // 0 - 255
+
+
 int game_start_time;
 
 void setupGame() {
@@ -54,7 +60,9 @@ void setupGame() {
 }
 
 void drawGame() {
-  image(background, 0, 0);
+  pg.beginDraw();
+  pg.image(background, 0, 0);
+  pg.endDraw();
 
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
@@ -167,7 +175,9 @@ void drawGame() {
 
   // Crosshair
   noCursor();
-  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  pg.beginDraw();
+  pg.image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  pg.endDraw();
 
   displayScoreboard();
   updateHighScore();
@@ -175,7 +185,7 @@ void drawGame() {
 
 // Main functions
 void setup() {
-  size(800, 600);
+  size(800, 600, P2D);
     // Images
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
@@ -186,6 +196,13 @@ void setup() {
   start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
   lazer = new SoundFile(this, "sounds/powerful-laser.wav");
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
+
+  pg = createGraphics(width,height,JAVA2D);
+  pg.beginDraw();
+  pg.smooth();
+  pg.stroke(255); 
+  pg.strokeWeight(2); 
+  pg.endDraw();
 
   setupMenu();
   frameRate(60);
@@ -206,6 +223,18 @@ void draw() {
       drawPause();
       break;
   }
+
+  glowImage = pg.get(0,0,pg.width,pg.height);
+  glowImage.resize(0, pg.width/4);
+  glowImage.filter(BLUR,1);
+  glowImage.resize(0,pg.height);
+
+  tint(glowEffectAmount);
+  image(glowImage,0,0);
+  blendMode(ADD);
+  tint(255);
+  image(pg,0,0);
+  blendMode(BLEND);
 }
 
 void keyPressed() {
@@ -351,10 +380,10 @@ void newGame() {
 
 int scoreOffset = 8;
 void displayScoreboard() {
-  fill(255);
-  textSize(20);
-  textAlign(RIGHT, TOP);
-  text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
+  pg.fill(255);
+  pg.textSize(20);
+  pg.textAlign(RIGHT, TOP);
+  pg.text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
 }
 
 void updateHighScore() {
