@@ -1,5 +1,5 @@
 PImage background, crosshair, destination;
-SoundFile lazer, game_bground_music, menu_music, start_sound;
+SoundFile lazer, game_bground_music, menu_music, start_sound, game_over_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -186,6 +186,7 @@ void setup() {
   start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
   lazer = new SoundFile(this, "sounds/powerful-laser.wav");
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
+  game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
 
   setupMenu();
   frameRate(60);
@@ -338,6 +339,7 @@ void newLevel() {
 void newGame() {
   level = 1;
   score = 0;
+  game_start_time = millis();
   newLevel = true;
   enemyMissiles.clear();
   antiMissiles.clear();
