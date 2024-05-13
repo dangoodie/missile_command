@@ -197,7 +197,7 @@ void setup() {
   lazer = new SoundFile(this, "sounds/powerful-laser.wav");
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
 
-  pg = createGraphics(width,height,JAVA2D);
+  pg = createGraphics(width,height,P2D);
   pg.beginDraw();
   pg.smooth();
   pg.stroke(255); 
