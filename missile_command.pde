@@ -224,6 +224,7 @@ void draw() {
       break;
   }
 
+  // Glow effect
   glowImage = pg.get(0,0,pg.width,pg.height);
   glowImage.resize(0, pg.width/4);
   glowImage.filter(BLUR,1);
