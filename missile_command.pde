@@ -1,5 +1,6 @@
 PImage background, crosshair, destination;
-SoundFile lazer, game_bground_music, menu_music, start_sound, game_over_sound, explosion_sound, enemy_explode_sound;
+SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
+SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -119,6 +120,7 @@ void drawGame() {
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
         explosions.add(new Explosion(m.position.x, m.position.y, true));
+        SoundController(base_destroyed_sound, 0.3, false); 
         enemyMissiles.remove(i);
         missilesDestroyed++;
         
@@ -192,6 +194,9 @@ void setup() {
   explosion_sound = new SoundFile(this, "sounds/explosion.wav");
   // A couple of options for the explosion sound. 1 doesn't really work, but 2 and 3 are good
   enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav");
+  // placeholder base destroyed sound. Not super happy with it. Searching for a new one.
+  base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav");
+
 
   setupMenu();
   frameRate(60);
