@@ -31,7 +31,7 @@ int score = 0;
 int highScore = 0;
 
 // Glow Effect
-PGraphics pg;
+PGraphics pg, bg; // set pg for the glow effect and bg for non-glow effect
 PImage glowImage;
 int glowEffectAmount = 127; // 0 - 255
 
@@ -60,9 +60,9 @@ void setupGame() {
 }
 
 void drawGame() {
-  pg.beginDraw();
-  pg.image(background, 0, 0);
-  pg.endDraw();
+  bg.beginDraw();
+  bg.image(background, 0, 0);
+  bg.endDraw();
 
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
@@ -200,15 +200,26 @@ void setup() {
   pg = createGraphics(width,height,P2D);
   pg.beginDraw();
   pg.smooth();
-  pg.stroke(255); 
-  pg.strokeWeight(2); 
   pg.endDraw();
+
+  bg = createGraphics(width,height,P2D);
+  bg.beginDraw();
+  bg.smooth();
+  bg.endDraw();
 
   setupMenu();
   frameRate(60);
 }
 
 void draw() {
+  // Reset the buffers
+  pg.beginDraw();
+  pg.background(0, 0);
+  pg.endDraw();
+  bg.beginDraw();
+  bg.background(0);
+  bg.endDraw();
+
   switch (currentState) {
     case MENU:
       drawMenu();
@@ -224,15 +235,16 @@ void draw() {
       break;
   }
 
-  // Glow effect
+   // Glow effect
   glowImage = pg.get(0,0,pg.width,pg.height);
   glowImage.resize(0, pg.width/4);
   glowImage.filter(BLUR,1);
   glowImage.resize(0,pg.height);
 
+  image(bg,0,0);
   tint(glowEffectAmount);
-  image(glowImage,0,0);
   blendMode(ADD);
+  image(glowImage,0,0);
   tint(255);
   image(pg,0,0);
   blendMode(BLEND);
