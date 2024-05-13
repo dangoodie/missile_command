@@ -380,10 +380,12 @@ void newGame() {
 
 int scoreOffset = 8;
 void displayScoreboard() {
+  pg.beginDraw();
   pg.fill(255);
   pg.textSize(20);
   pg.textAlign(RIGHT, TOP);
   pg.text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
+  pg.endDraw();
 }
 
 void updateHighScore() {
