@@ -9,9 +9,15 @@ class City implements Target {
 
   void display() {
     if (isAlive) {
-      fill(255);
+      fill(255, 100);
       stroke(0);
-      ellipse(position.x, position.y, 8, 8);
+      // Uncomment these lines to add a rectangle behind cites if needed for debuugging. Can be deleted later.
+      // rectMode(CENTER);
+      // rect(position.x, position.y, 76, 40);
+      // rectMode(CORNER);
+      imageMode(CENTER);
+      image(city, position.x, position.y, 76, 40);
+      imageMode(CORNER);
     } else {
       // display destroyed city
     }

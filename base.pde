@@ -20,7 +20,9 @@ class Base implements Target {
       // Drawing the base
       fill(0, 255, 0);
       noStroke();
-      ellipse(position.x, position.y, 20, 20);
+      rectMode(CENTER);
+      rect(position.x, position.y, 60, 50);
+      rectMode(CORNER);
 
       // Displaying the ammo
       fill(255);

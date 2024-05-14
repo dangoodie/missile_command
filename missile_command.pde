@@ -1,4 +1,4 @@
-PImage background, crosshair, destination;
+PImage background, crosshair, destination, city;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
@@ -34,16 +34,16 @@ int highScore = 0;
 int game_start_time;
 
 void setupGame() {
-  bases.add(new Base(100, height - 50));
-  bases.add(new Base(400, height - 50));
-  bases.add(new Base(700, height - 50));
+  bases.add(new Base(92, height - 52));
+  bases.add(new Base(400, height - 52));
+  bases.add(new Base(708, height - 52));
 
-  cities.add(new City(150, height - 50));
-  cities.add(new City(250, height - 50));
-  cities.add(new City(350, height - 50));
-  cities.add(new City(450, height - 50));
-  cities.add(new City(550, height - 50));
-  cities.add(new City(650, height - 50));
+  cities.add(new City(165, height - 45));
+  cities.add(new City(246, height - 45));
+  cities.add(new City(327, height - 45));
+  cities.add(new City(473, height - 45));
+  cities.add(new City(554, height - 45));
+  cities.add(new City(635, height - 45));
 
   lastFireTime = millis();
 
@@ -184,6 +184,7 @@ void setup() {
   background = loadImage("images/background.png");
   crosshair = loadImage("images/crosshair.png");
   destination = loadImage("images/destination.png");
+  city = loadImage("images/neonCity.png");
 
   // Sounds
   menu_music = new SoundFile(this, "sounds/menu-music.wav");
