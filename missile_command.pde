@@ -2,7 +2,7 @@ import processing.sound.*;
 
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
-PFont friendOrFoeTallBB, spaceGroteskBold, spaceGroteskLight;
+PFont friendOrFoeTallBB, spaceGroteskLight;
 PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, pause;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
@@ -192,7 +192,6 @@ void setup() {
 
   // Fonts
   friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
-  spaceGroteskBold = createFont("Space Grotesk Bold", 32);
   spaceGroteskLight = createFont("Space Grotesk Light", 32);
 
   // Images
