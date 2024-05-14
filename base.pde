@@ -23,12 +23,15 @@ class Base implements Target {
       rectMode(CENTER);
       rect(position.x, position.y, 60, 50);
       rectMode(CORNER);
+      // ellipse(position.x, position.y, 20, 20);
 
       // Displaying the ammo
       fill(255);
-      text(ammo, position.x, position.y + 20);
+      textFont(spaceGroteskLight);
+      textSize(20);
+      text(ammo, position.x, position.y + 32);
     } else {
-      // display destroyed base
+      // Display destroyed base
     }
   }
 

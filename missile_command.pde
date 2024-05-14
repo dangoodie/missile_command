@@ -1,4 +1,9 @@
-PImage background, crosshair, destination, city;
+import processing.sound.*;
+
+int red = 0xFF39A4;
+int blue = 0x25C4F8;
+PFont friendOrFoeTallBB, spaceGroteskBold, spaceGroteskLight;
+PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, pause;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
@@ -7,13 +12,14 @@ ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 boolean debug = false; // Set this to true to enable debugging features
+int game_start_time;
 GameState currentState = GameState.MENU;
 
-// Anti Missile variables
+// Anti Missile Variables
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
-// Enemy Missile variables
+// Enemy Missile Variables
 int missileLevelCount; // Number of missiles to fire
 int missilesRemaining; // Number of missiles remaining to fire
 float missileSpeed = 0.5; // Speed of the missile
@@ -23,27 +29,25 @@ int missileDelayMin = 1000; // Minimum delay in milliseconds (1 second)
 int missileDelayMax = 5000; // Maximum delay in milliseconds (5 second)
 int missilesDestroyed = 0; // Number of missiles destroyed
 
-// Level variables
+// Level Variables
 boolean newLevel = true;
 int level = 1;
 
-// Score variables
+// Score Variables
 int score = 0;
 int highScore = 0;
 
-int game_start_time;
-
 void setupGame() {
-  bases.add(new Base(92, height - 52));
-  bases.add(new Base(400, height - 52));
-  bases.add(new Base(708, height - 52));
+  bases.add(new Base(92, height - 58));
+  bases.add(new Base(400, height - 58));
+  bases.add(new Base(708, height - 58));
 
-  cities.add(new City(165, height - 45));
-  cities.add(new City(246, height - 45));
-  cities.add(new City(327, height - 45));
-  cities.add(new City(473, height - 45));
-  cities.add(new City(554, height - 45));
-  cities.add(new City(635, height - 45));
+  cities.add(new City(165, height - 51));
+  cities.add(new City(246, height - 51));
+  cities.add(new City(327, height - 51));
+  cities.add(new City(473, height - 51));
+  cities.add(new City(554, height - 51));
+  cities.add(new City(635, height - 51));
 
   lastFireTime = millis();
 
@@ -57,11 +61,15 @@ void setupGame() {
 void drawGame() {
   image(background, 0, 0);
 
+  // Uncomment if there is a ground
+  // image(line, 0, 38);
+
+  // Background music
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
   }
 
-   // Check if all cities have been destroyed
+  // Check if all cities have been destroyed
   if (checkGameOver()) {
     currentState = GameState.GAME_OVER;
     setupGameOver();
@@ -86,7 +94,7 @@ void drawGame() {
     newLevel();
   }
 
-   // Anti-missiles
+  // Anti-missiles
   for (int i = antiMissiles.size() - 1; i >= 0; i--) {
     Missile m = antiMissiles.get(i);
     m.update();
@@ -94,12 +102,11 @@ void drawGame() {
     m.showDestination();
 
     if (m.hasHitTarget()) {
-      SoundController(explosion_sound, 0.3, false);
       explosions.add(new Explosion(m.position.x, m.position.y, false));
       antiMissiles.remove(i);
+      SoundController(explosion_sound, 0.3, false);
     }
   }
-
 
   // Environment
   for (Base b : bases) {
@@ -120,7 +127,7 @@ void drawGame() {
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
         explosions.add(new Explosion(m.position.x, m.position.y, true));
-        SoundController(base_destroyed_sound, 0.3, false); 
+        SoundController(base_destroyed_sound, 0.3, false);
         enemyMissiles.remove(i);
         missilesDestroyed++;
         
@@ -147,6 +154,7 @@ void drawGame() {
 
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
         SoundController(enemy_explode_sound, 0.8, false);
+
         em.death();
         enemyMissiles.remove(j);
         explosions.add(new Explosion(em.position.x, em.position.y, false));
@@ -173,6 +181,7 @@ void drawGame() {
   noCursor();
   image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
 
+  // Score
   displayScoreboard();
   updateHighScore();
 }
@@ -180,11 +189,21 @@ void drawGame() {
 // Main functions
 void setup() {
   size(800, 600);
-    // Images
+
+  // Fonts
+  friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
+  spaceGroteskBold = createFont("Space Grotesk Bold", 32);
+  spaceGroteskLight = createFont("Space Grotesk Light", 32);
+
+  // Images
+  line = loadImage("images/line.png");
   background = loadImage("images/background.png");
+  menuBackground = loadImage("images/menu_background.png");
+  gameOverBackground = loadImage("images/game_over_background.png");
   crosshair = loadImage("images/crosshair.png");
   destination = loadImage("images/destination.png");
   city = loadImage("images/neonCity.png");
+  pause = loadImage("images/pause.png");
 
   // Sounds
   menu_music = new SoundFile(this, "sounds/menu-music.wav");
@@ -193,11 +212,8 @@ void setup() {
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
   game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
   explosion_sound = new SoundFile(this, "sounds/explosion.wav");
-  // A couple of options for the explosion sound. 1 doesn't really work, but 2 and 3 are good
-  enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav");
-  // placeholder base destroyed sound. Not super happy with it. Searching for a new one.
-  base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav");
-
+  enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav"); // Experiment with 2 and 3
+  base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav"); // TODO: Search for a new sound
 
   setupMenu();
   frameRate(60);
@@ -234,7 +250,6 @@ void keyPressed() {
 }
 
 // Enemy missile helper functions
-
 Base getClosestBase() {
   Base closestBase = null;
   float closestDistance = Float.MAX_VALUE;
@@ -266,10 +281,10 @@ int generateLevelMissileCount(int level) {
 }
 
 int loadMissiles() {
-    int missiles = int(random(1, missilesRemaining));
-    missilesRemaining -= missiles;
-    if (debug) println("Missiles remaining: " + missilesRemaining + " Missiles loaded: " + missiles);
-    return missiles;
+  int missiles = int(random(1, missilesRemaining));
+  missilesRemaining -= missiles;
+  if (debug) println("Missiles remaining: " + missilesRemaining + " Missiles loaded: " + missiles);
+  return missiles;
 }
 
 void shootMissiles(int count) {
@@ -286,9 +301,8 @@ int nextMissileDelay() {
   return millis() + (int) random(missileDelayMin, missileDelayMax);
 }
 
-// This function picks a random target that has not been selected yet
+// This function picks a random target that has not been selected yet.
 // If all targets have been selected, it clears the selected targets and picks a new target
-
 ArrayList<Target> selectedTargets = new ArrayList<Target>();
 
 Target pickValidTarget() {
@@ -333,12 +347,11 @@ Target pickValidTarget() {
   return selected;
 }
 
-
 // New level helper functions
-
 void newLevel() {
   level++;
   newLevel = true;
+  
   enemyMissiles.clear();
   antiMissiles.clear();
   explosions.clear();
@@ -350,8 +363,8 @@ void newLevel() {
 void newGame() {
   level = 1;
   score = 0;
-  game_start_time = millis();
   newLevel = true;
+
   enemyMissiles.clear();
   antiMissiles.clear();
   explosions.clear();
@@ -361,13 +374,20 @@ void newGame() {
 }
 
 // Scoreboard helper functions
-
-int scoreOffset = 8;
 void displayScoreboard() {
+  // Level
+  fill(color(red(blue), green(blue), blue(blue)));
+  textFont(spaceGroteskLight);
+  textSize(15);
+  textAlign(CENTER, TOP);
+  text("LVL " + level, width/2, 15);
+
+  // Score
   fill(255);
-  textSize(20);
-  textAlign(RIGHT, TOP);
-  text("Level: " + level + "\nScore: " + score,  width - scoreOffset, 0 + scoreOffset);
+  textFont(spaceGroteskLight);
+  textSize(30);
+  textAlign(CENTER, TOP);
+  text(score, width/2, 35);
 }
 
 void updateHighScore() {

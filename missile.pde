@@ -10,7 +10,6 @@ class Missile {
     this.target = t;
     this.velocity = PVector.sub(t.getPosition(), position);
     this.isAlive = true;
-
     this.speed = speed;
     this.isEnemy = isEnemy;
 
@@ -24,14 +23,21 @@ class Missile {
 
   void display() {
     if (isAlive) {
-
+      int strokeColor;
       if (isEnemy) {
-        stroke(255, 0, 0); // Red
+        strokeColor = red; // Red
       } else {
-        stroke(0, 0, 255); // Blue
+        strokeColor = blue; // Blue
       }
+
+      stroke(strokeColor);
       strokeWeight(1);
+      
+      // Calculate alpha value based on distance traveled
+      float alphaValue = map(position.dist(startingPosition), 0, target.getPosition().dist(startingPosition), 255, 0);
+      stroke(red(strokeColor), green(strokeColor), blue(strokeColor), alphaValue);
       line(startingPosition.x, startingPosition.y, position.x, position.y);
+
       noStroke();
       fill(255);
       ellipse(position.x, position.y, 2, 2);
@@ -53,14 +59,5 @@ class Missile {
       return true;
     }
     return false;
-  }
-
-  // Getter methods
-  public float getX() {
-    return position.x;
-  }
-
-  public float getY() {
-    return position.y;
   }
 }
