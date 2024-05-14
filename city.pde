@@ -15,12 +15,14 @@ class City implements Target {
       image(city, position.x, position.y, 76, 40);
       imageMode(CORNER);
       
-      if (debug) {
-        fill(255, 0, 0);
-        text("City", position.x, position.y);
-      }
     } else {
       // Display destroyed city
+    }
+
+    if (debug) {
+      fill(255, 0, 0);
+      text("City", position.x, position.y);
+      text("isAlive: " + isAlive, position.x, position.y + 10);
     }
   }
 

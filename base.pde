@@ -1,5 +1,5 @@
 class Base implements Target {
-  PVector position, missileDestination;
+  PVector position;
   boolean isAlive;
   int ammo = 10;
   float speed = 5;
