@@ -38,17 +38,8 @@ int score = 0;
 int highScore = 0;
 
 void setupGame() {
-  bases.add(new Base(92, height - 58));
-  bases.add(new Base(400, height - 58));
-  bases.add(new Base(708, height - 58));
-
-  cities.add(new City(165, height - 51));
-  cities.add(new City(246, height - 51));
-  cities.add(new City(327, height - 51));
-  cities.add(new City(473, height - 51));
-  cities.add(new City(554, height - 51));
-  cities.add(new City(635, height - 51));
-
+  buildBases();
+  buildCities();
   lastFireTime = millis();
 
   // Generate missile count
@@ -58,11 +49,24 @@ void setupGame() {
   missilesDestroyed = 0;
 }
 
+void buildBases() {
+  bases.add(new Base(92, height - 58));
+  bases.add(new Base(400, height - 58));
+  bases.add(new Base(708, height - 58));
+}
+
+void buildCities() {
+  cities.add(new City(165, height - 51));
+  cities.add(new City(246, height - 51));
+  cities.add(new City(327, height - 51));
+  cities.add(new City(473, height - 51));
+  cities.add(new City(554, height - 51));
+  cities.add(new City(635, height - 51));
+}
+
 void drawGame() {
   image(background, 0, 0);
-
-  // Uncomment if there is a ground
-  // image(line, 0, 38);
+  image(line, 0, 38);
 
   // Background music
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
@@ -355,8 +359,13 @@ void newLevel() {
   antiMissiles.clear();
   explosions.clear();
   bases.clear();
-  cities.clear();
-  setupGame();
+  buildBases();
+
+  // Generate missile count
+  missileLevelCount = generateLevelMissileCount(level);
+  missilesRemaining = missileLevelCount;
+  missileDelay = nextMissileDelay();
+  missilesDestroyed = 0;
 }
 
 void newGame() {
