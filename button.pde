@@ -44,6 +44,7 @@ class Button {
 
   void checkClick() {
     if (overButton() && mousePressed) {
+      SoundController(button_click, 0.2, false);
       action.run();
       mousePressed = false;
     }
