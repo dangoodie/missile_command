@@ -375,12 +375,14 @@ void newGame() {
   level = 1;
   score = 0;
   newLevel = true;
+  game_start_time = millis();
 
   enemyMissiles.clear();
   antiMissiles.clear();
   explosions.clear();
   bases.clear();
   cities.clear();
+  SoundController(start_sound, 0.4, false);
   setupGame();
 }
 
