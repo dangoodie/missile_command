@@ -15,6 +15,10 @@ class City implements Target {
       image(city, position.x, position.y, 76, 40);
       imageMode(CORNER);
       
+      // Uncomment these lines to add a rectangle behind cites if needed for debuugging. Can be deleted later.
+      // rectMode(CENTER);
+      // rect(position.x, position.y, 76, 40);
+      // rectMode(CORNER);
     } else {
       // Display destroyed city
     }

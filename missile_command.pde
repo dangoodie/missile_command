@@ -50,9 +50,9 @@ void setupGame() {
 }
 
 void buildBases() {
-  bases.add(new Base(92, height - 58));
-  bases.add(new Base(400, height - 58));
-  bases.add(new Base(708, height - 58));
+  bases.add(new Base(92, height - 57));
+  bases.add(new Base(400, height - 57));
+  bases.add(new Base(708, height - 57));
 }
 
 void buildCities() {
@@ -162,6 +162,9 @@ void drawGame() {
         em.death();
         enemyMissiles.remove(j);
         explosions.add(new Explosion(em.position.x, em.position.y, false));
+
+        // Score
+        e.displayAddedScore = true;
         score += scoreMissile();
         missilesDestroyed++;
       }
@@ -405,5 +408,5 @@ void updateHighScore() {
 }
 
 int scoreMissile() {
-  return 100 + 100 * ((level - 1) / 2);
+  return 25 + 25 * ((level - 1) / 2);
 }
