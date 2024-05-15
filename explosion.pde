@@ -2,6 +2,7 @@ class Explosion {
   PVector position;
   float size = 0;
   float lifespan;
+  boolean displayAddedScore = false;
   boolean isEnemy;
 
   Explosion(float x, float y, boolean isEnemy) {
@@ -21,9 +22,32 @@ class Explosion {
   }
 
   void display() {
-    // noStroke();
     fill(255, 150, 0, lifespan * 5); // Color fades as the explosion "ages"
     ellipse(position.x, position.y, size, size);
+
+    // Diplsay "+25" text on explosion
+    if (displayAddedScore) {
+      int messageAlpha = 255;
+      int messageStartTime = millis();
+      int displayDuration = 1000;
+
+      if (messageAlpha > 0) {
+        fill(255, 255, 255);
+        textFont(spaceGroteskLight);
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        text("+" + scoreMissile(), position.x, position.y);
+          
+        // Decrease the alpha value over time
+        int elapsedTime = millis() - messageStartTime;
+        if (elapsedTime < displayDuration) {
+          float fadeAmount = map(elapsedTime, 0, displayDuration, 255, 0);
+          messageAlpha = int(fadeAmount);
+        }
+      } else {
+        messageAlpha = 0;
+      }
+    }
 
     // Uncomment if there are different images for enemies and anti-missiles
     // if (isEnemy) {
