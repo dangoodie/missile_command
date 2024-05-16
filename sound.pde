@@ -11,3 +11,13 @@ void SoundController(SoundFile sound, float volume, boolean loop) {
     sound.amp(volume);
   }
 }
+
+void mute() {
+  mute = !mute; // toggle mute
+
+  if (mute) {
+    master.volume(0);
+  } else {
+    master.volume(1);
+  }
+}
