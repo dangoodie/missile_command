@@ -115,7 +115,7 @@ void drawGame() {
     m.showDestination();
 
     if (m.hasHitTarget()) {
-      explosions.add(new Explosion(m.position.x, m.position.y, false));
+      explosions.add(new Explosion(m.position, false));
       antiMissiles.remove(i);
       SoundController(explosion_sound, 0.3, false);
     }
@@ -139,7 +139,7 @@ void drawGame() {
     // Destroy targets
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
-        explosions.add(new Explosion(m.position.x, m.position.y, true));
+        explosions.add(new Explosion(m.position, true));
         SoundController(base_destroyed_sound, 0.3, false);
         enemyMissiles.remove(i);
         missilesDestroyed++;
@@ -170,10 +170,11 @@ void drawGame() {
 
         em.death();
         enemyMissiles.remove(j);
-        explosions.add(new Explosion(em.position.x, em.position.y, false));
+        explosions.add(new Explosion(em.position, false));
+        scoreText.add(new ScoreText(em.position, scoreMissile()));
 
         // Score
-        e.displayAddedScore = true;
+
         score += scoreMissile();
         missilesDestroyed++;
       }

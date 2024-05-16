@@ -2,11 +2,10 @@ class Explosion {
   PVector position;
   float size = 0;
   float lifespan;
-  boolean displayAddedScore = false;
   boolean isEnemy;
 
-  Explosion(float x, float y, boolean isEnemy) {
-    position = new PVector(x, y);
+  Explosion(PVector position, boolean isEnemy) {
+    this.position = position;
     this.isEnemy = isEnemy;
 
     if (isEnemy) {
@@ -24,13 +23,6 @@ class Explosion {
   void display() {
     fill(255, 150, 0, lifespan * 5); // Color fades as the explosion "ages"
     ellipse(position.x, position.y, size, size);
-
-    // Diplay score text on explosion
-    if (displayAddedScore) {
-      scoreText.add(new ScoreText(scoreMissile(), position));
-      displayAddedScore = false; // Only display the score once
-    }
-
     // Uncomment if there are different images for enemies and anti-missiles
     // if (isEnemy) {
     //   image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);

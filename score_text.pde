@@ -7,7 +7,7 @@ class ScoreText {
   int distance = 10; // Distance to move the text up
   PVector position; // To hold the position of the text
 
-  ScoreText(int score, PVector position) {
+  ScoreText(PVector position, int score) {
     this.score = score;
     this.position = position; // Set the position where the text will be displayed
     now = millis(); // Capture the time when the object is created
