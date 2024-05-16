@@ -207,7 +207,7 @@ void setup() {
   size(800, 600);
 
   // Fonts
-   friendOrFoeTallBB = createFont("fonts/FriendorFoeTallBB", 32);
+  friendOrFoeTallBB = createFont("fonts/FriendorFoeTallBB", 32);
   spaceGroteskLight = createFont("fonts/Space Grotesk Light", 32);
 
   // Images
