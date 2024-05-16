@@ -11,6 +11,7 @@ ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
+ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
 boolean debug = false; // Set this to true to enable debugging features
 int game_start_time;
 GameState currentState = GameState.MENU;
@@ -98,6 +99,14 @@ void drawGame() {
     newLevel();
   }
 
+  for (int i = scoreText.size() - 1; i >= 0; i--) {
+    ScoreText st = scoreText.get(i);
+    st.display();
+    if (st.isExpired()) {
+      scoreText.remove(i);
+    }
+  }
+
   // Anti-missiles
   for (int i = antiMissiles.size() - 1; i >= 0; i--) {
     Missile m = antiMissiles.get(i);
@@ -106,7 +115,7 @@ void drawGame() {
     m.showDestination();
 
     if (m.hasHitTarget()) {
-      explosions.add(new Explosion(m.position.x, m.position.y, false));
+      explosions.add(new Explosion(m.position, false));
       antiMissiles.remove(i);
       SoundController(explosion_sound, 0.3, false);
     }
@@ -130,7 +139,7 @@ void drawGame() {
     // Destroy targets
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
-        explosions.add(new Explosion(m.position.x, m.position.y, true));
+        explosions.add(new Explosion(m.position, true));
         SoundController(base_destroyed_sound, 0.3, false);
         enemyMissiles.remove(i);
         missilesDestroyed++;
@@ -161,10 +170,11 @@ void drawGame() {
 
         em.death();
         enemyMissiles.remove(j);
-        explosions.add(new Explosion(em.position.x, em.position.y, false));
+        explosions.add(new Explosion(em.position, false));
+        scoreText.add(new ScoreText(em.position, scoreMissile()));
 
         // Score
-        e.displayAddedScore = true;
+
         score += scoreMissile();
         missilesDestroyed++;
       }
@@ -198,8 +208,8 @@ void setup() {
   size(800, 600);
 
   // Fonts
-   friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
-  spaceGroteskLight = createFont("Space Grotesk Light", 32);
+  friendOrFoeTallBB = createFont("fonts/FriendorFoeTallBB", 32);
+  spaceGroteskLight = createFont("fonts/Space Grotesk Light", 32);
 
   // Images
   line = loadImage("images/line.png");
