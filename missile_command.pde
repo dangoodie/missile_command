@@ -208,8 +208,8 @@ void setup() {
   size(800, 600);
 
   // Fonts
-  friendOrFoeTallBB = createFont("fonts/FriendorFoeTallBB", 32);
-  spaceGroteskLight = createFont("fonts/Space Grotesk Light", 32);
+  friendOrFoeTallBB = createFont("fonts/FriendOrFoeTallBB/Friend or Foe Tall BB/Friend or Foe Tall BB.ttf", 32);
+  spaceGroteskLight = createFont("fonts/SpaceGrotesk/static/SpaceGrotesk-Light.ttf", 32);
 
   // Images
   line = loadImage("images/line.png");
