@@ -15,6 +15,11 @@ class Base implements Target {
     ammo--;
   }
 
+  float calculateAngleToMouse() {
+    PVector direction = PVector.sub(new PVector(mouseX, mouseY), position);
+    return direction.heading();
+  }
+
   void display() {
     if (isAlive) {
       // Drawing the base
@@ -23,6 +28,15 @@ class Base implements Target {
       rectMode(CENTER);
       rect(position.x, position.y, 60, 50);
       rectMode(CORNER);
+
+       // Drawing the turret barrel
+      float angle = calculateAngleToMouse();
+      float barrelLength = 40;
+      PVector barrelEnd = PVector.fromAngle(angle).mult(barrelLength).add(position);
+      stroke(255, 0, 0);
+      strokeWeight(4);
+      line(position.x, position.y, barrelEnd.x, barrelEnd.y);
+      noStroke();
 
       // Displaying the ammo
       fill(255);
