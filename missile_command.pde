@@ -11,6 +11,7 @@ ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
+ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
 boolean debug = false; // Set this to true to enable debugging features
 int game_start_time;
 GameState currentState = GameState.MENU;
@@ -96,6 +97,14 @@ void drawGame() {
   // Check if all missiles have been destroyed
   if (missilesDestroyed == missileLevelCount && enemyMissiles.size() == 0 && explosions.size() == 0 && antiMissiles.size() == 0){
     newLevel();
+  }
+
+  for (int i = scoreText.size() - 1; i >= 0; i--) {
+    ScoreText st = scoreText.get(i);
+    st.display();
+    if (st.isExpired()) {
+      scoreText.remove(i);
+    }
   }
 
   // Anti-missiles
@@ -198,8 +207,8 @@ void setup() {
   size(800, 600);
 
   // Fonts
-   friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
-  spaceGroteskLight = createFont("Space Grotesk Light", 32);
+   friendOrFoeTallBB = createFont("fonts/FriendorFoeTallBB", 32);
+  spaceGroteskLight = createFont("fonts/Space Grotesk Light", 32);
 
   // Images
   line = loadImage("images/line.png");
