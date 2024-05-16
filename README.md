@@ -4,9 +4,8 @@
 **Team:** Daniel Gooden, Tanya Boye, Zoë Koh
 
 # Steps
-1. Inside the Processing program, go to: `Sketch > Import Library > Manage Libraries`, then search and install "Sound" by The Processing Foundation
-2. Inside the project folder, go to: `fonts > SpaceGrotesk`, then download the "SpaceGrotesk-VariableFont_wght" TTF file
-3. Inside the project folder, go to: `fonts > FriendOrFoeTallBB > FriendOrFoeTallBB>` then download the "Friend or Foe Tall BB" TTF file
+1. Run `missile_command.pde` to play the game
+2. Inside the Processing program, go to: `Sketch > Import Library > Manage Libraries`, then search and install "Sound" by The Processing Foundation
 
 # Credits
 | Title  | Type | Source |
