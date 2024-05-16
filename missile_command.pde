@@ -1,7 +1,7 @@
 import processing.sound.*;
 
 Sound master;
-boolean muted = false;
+boolean mute = false;
 
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
