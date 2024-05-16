@@ -5,7 +5,7 @@ int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
 PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, pause;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
-SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound;
+SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -198,7 +198,7 @@ void setup() {
   size(800, 600);
 
   // Fonts
-  friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
+   friendOrFoeTallBB = createFont("FriendorFoeTallBB", 32);
   spaceGroteskLight = createFont("Space Grotesk Light", 32);
 
   // Images
@@ -220,6 +220,7 @@ void setup() {
   explosion_sound = new SoundFile(this, "sounds/explosion.wav");
   enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav"); // Experiment with 2 and 3
   base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav"); // TODO: Search for a new sound
+  button_click = new SoundFile(this, "sounds/button_click.mp3");
 
   setupMenu();
   frameRate(60);
@@ -247,6 +248,7 @@ void keyPressed() {
     key = 0; // Prevent default behavior
 
     if (currentState == GameState.PAUSE) {
+      game_bground_music.amp(0.2);
       currentState = GameState.GAME;
     } else if (currentState == GameState.GAME) {
       currentState = GameState.PAUSE;
@@ -375,12 +377,14 @@ void newGame() {
   level = 1;
   score = 0;
   newLevel = true;
+  game_start_time = millis();
 
   enemyMissiles.clear();
   antiMissiles.clear();
   explosions.clear();
   bases.clear();
   cities.clear();
+  SoundController(start_sound, 0.4, false);
   setupGame();
 }
 

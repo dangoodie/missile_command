@@ -6,7 +6,6 @@ void setupMenu() {
   startButton = new Button(width/2 - 100, 330, 200, 50, "Start", () -> {   
     currentState = GameState.GAME;
     menu_music.stop();
-    SoundController(start_sound, 0.4, false);
     newGame();
   });
   startButton.bgColor = color(red(blue), green(blue), blue(blue));
