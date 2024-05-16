@@ -3,7 +3,7 @@ import processing.sound.*;
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
-PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, pause;
+PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
@@ -219,6 +219,7 @@ void setup() {
   crosshair = loadImage("images/crosshair.png");
   destination = loadImage("images/destination.png");
   city = loadImage("images/neonCity.png");
+  destroyed_city = loadImage("images/destroyedCity.png");
   pause = loadImage("images/pause.png");
 
   // Sounds
