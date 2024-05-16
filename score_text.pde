@@ -4,13 +4,15 @@ class ScoreText {
   float moveAmount = 0;
   int now;
   int duration = 1000; // Duration in milliseconds for the fade effect
-  int distance = 50; // Distance to move the text down
+  int distance = 10; // Distance to move the text up
   PVector position; // To hold the position of the text
 
   ScoreText(int score, PVector position) {
     this.score = score;
     this.position = position; // Set the position where the text will be displayed
     now = millis(); // Capture the time when the object is created
+
+    if (debug) System.out.println("ScoreText created");
   }
 
   void display() {

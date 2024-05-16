@@ -12,7 +12,7 @@ ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
-boolean debug = false; // Set this to true to enable debugging features
+boolean debug = true; // Set this to true to enable debugging features
 int game_start_time;
 GameState currentState = GameState.MENU;
 

@@ -28,6 +28,7 @@ class Explosion {
     // Diplay score text on explosion
     if (displayAddedScore) {
       scoreText.add(new ScoreText(scoreMissile(), position));
+      displayAddedScore = false; // Only display the score once
     }
 
     // Uncomment if there are different images for enemies and anti-missiles
