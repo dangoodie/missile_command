@@ -32,11 +32,16 @@ class Base implements Target {
        // Drawing the turret barrel
       float angle = calculateAngleToMouse();
       float barrelLength = 40;
-      PVector barrelEnd = PVector.fromAngle(angle).mult(barrelLength).add(position);
-      stroke(255, 0, 0);
-      strokeWeight(4);
-      line(position.x, position.y, barrelEnd.x, barrelEnd.y);
-      noStroke();
+      float barrelWidth = 8;
+
+      pushMatrix();
+      translate(position.x, position.y);
+      rotate(angle);
+      fill(255, 0, 0);
+      rectMode(CORNER);
+      rect(0, -barrelWidth / 2, barrelLength, barrelWidth);
+      popMatrix();
+
 
       // Displaying the ammo
       fill(255);
