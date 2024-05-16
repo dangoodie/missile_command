@@ -1,5 +1,8 @@
 import processing.sound.*;
 
+Sound master;
+boolean mute = false;
+
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
@@ -223,6 +226,7 @@ void setup() {
   pause = loadImage("images/pause.png");
 
   // Sounds
+  master = new Sound(this);
   menu_music = new SoundFile(this, "sounds/menu-music.wav");
   start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
   lazer = new SoundFile(this, "sounds/powerful-laser.wav");
