@@ -11,7 +11,8 @@ class Base implements Target {
 
   void fire() {
     Target t = new LocationTarget(new PVector(mouseX, mouseY));
-    antiMissiles.add(new Missile(this.position.x, this.position.y, t, speed, false));
+    PVector offPosition = this.getPosition();
+    antiMissiles.add(new Missile(offPosition.x, offPosition.y, t, speed, false));
     totalAntiMissilesFired++;
     ammo--;
   }
@@ -23,25 +24,23 @@ class Base implements Target {
 
   void display() {
     if (isAlive) {
-      // Drawing the base
-      fill(0, 255, 0);
-      noStroke();
-      rectMode(CENTER);
-      rect(position.x, position.y, 60, 50);
-      rectMode(CORNER);
-
       // Drawing the turret barrel
       float angle = calculateAngleToMouse();
-      float barrelLength = 40;
+      float barrelLength = 30;
       float barrelWidth = 8;
 
       pushMatrix();
-      translate(position.x, position.y);
+      translate(position.x, position.y + 5);
       rotate(angle);
-      fill(255, 0, 0);
+      fill(purple);
       rectMode(CORNER);
       rect(0, -barrelWidth / 2, barrelLength, barrelWidth);
       popMatrix();
+
+      // Drawing the base
+      noStroke();
+      imageMode(CENTER);
+      image(base, this.position.x, this.position.y, 60, 50);
 
       // Displaying the ammo
       fill(255);
@@ -49,7 +48,8 @@ class Base implements Target {
       textSize(20);
       text(ammo, position.x, position.y + 34);
     } else {
-      // Display destroyed base
+      imageMode(CENTER);
+      image(destroyedBase, this.position.x, this.position.y, 60, 50);
     }
   }
 
@@ -67,6 +67,8 @@ class Base implements Target {
   }
 
   PVector getPosition() {
-    return position;
+    int yOff = 5;
+    PVector offPosition = new PVector(this.position.x, this.position.y + yOff);
+    return offPosition;
   }
 }
