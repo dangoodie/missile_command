@@ -8,6 +8,7 @@ void setupGameOver() {
   // "New Game" button
   newGameButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "New Game", () -> {   
     currentState = GameState.GAME;
+    bonusPointsLevel = 0;
     newGame();
   });
   newGameButton.bgColor = color(red(blue), green(blue), blue(blue));
@@ -42,8 +43,8 @@ void drawGameOver() {
 
   // Buttons
   newGameButton.display();
-  menuButton.display();
   newGameButton.checkClick();
+  menuButton.display();
   menuButton.checkClick();
 }
 
