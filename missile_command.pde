@@ -22,6 +22,7 @@ int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
 PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion;
+PImage tempBgImage; // variable to capture and store a background image
 Sound master;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
@@ -31,10 +32,10 @@ ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
-boolean mute = false;
+boolean mute = false; // Set this to true to mute the game
 boolean debug = false; // Set this to true to enable debugging features
-int game_start_time;
-GameState currentState = GameState.MENU;
+int game_start_time; // Time when the game starts
+GameState currentState = GameState.MENU; // Initial state
 
 // Anti Missile Variables
 int totalAntiMissilesFired, leftOverAmmo;
@@ -52,7 +53,6 @@ int missileDelayMax = 5000; // Maximum delay in milliseconds (5 second)
 int missilesDestroyed = 0; // Number of missiles destroyed
 
 // Level Variables
-boolean displayCrosshair = true;
 boolean newLevel = true;
 int level = 1;
 
@@ -108,7 +108,6 @@ void drawGame() {
   if (newLevel) {
     // Score screen
     if (level > 1) {
-      displayCrosshair = false;
       currentState = GameState.SCORE;
       totalAntiMissilesFired = 0;
       survivingCities = 0;
@@ -234,15 +233,18 @@ void drawGame() {
     }
   }
 
-  // Crosshair
-  noCursor();
-  if (displayCrosshair) {
-    image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  // Score
+  updateHighScore();
+  displayScoreboard();
+
+  // capture the background for the new level screen
+  if (newLevel) {
+    tempBgImage = get();
   }
 
-  // Score
-  displayScoreboard();
-  updateHighScore();
+  // Crosshair
+  noCursor();
+  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
 }
 
 // Main functions
@@ -306,7 +308,6 @@ void draw() {
 void keyPressed() {
   if (key == ESC) {
     key = 0; // Prevent default behavior
-
     if (currentState == GameState.PAUSE) {
       game_bground_music.amp(0.2);
       currentState = GameState.GAME;
