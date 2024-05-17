@@ -56,6 +56,7 @@ int missilesDestroyed = 0; // Number of missiles destroyed
 // Level Variables
 boolean newLevel = true;
 int level = 1;
+boolean displayCrosshair = true;
 
 // Score Variables
 int score = 0;
@@ -110,10 +111,12 @@ void drawGame() {
   if (newLevel) {
     // Score screen
     if (level > 1) {
+      displayCrosshair = false;
       currentState = GameState.SCORE;
       totalAntiMissilesFired = 0;
       getBonusPointsLevel();
       score += calculateBonusPoints();
+      setupScoreScreen();
     }
 
     // Next level
@@ -130,7 +133,7 @@ void drawGame() {
   }
 
   // Check if all missiles have been destroyed
-  if (missilesDestroyed == missileLevelCount && enemyMissiles.size() == 0 && explosions.size() == 0 && antiMissiles.size() == 0){
+  if (missilesDestroyed == missileLevelCount && enemyMissiles.size() == 0 && explosions.size() == 0 && antiMissiles.size() == 0 && scoreText.size() == 0){
     newLevel();
   }
 
@@ -230,7 +233,9 @@ void drawGame() {
 
   // Crosshair
   noCursor();
-  image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  if (displayCrosshair) {
+    image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
+  }
 
   // Score
   displayScoreboard();
@@ -288,7 +293,6 @@ void draw() {
       drawPause();
       break;
     case SCORE:
-      setupScoreScreen();
       drawScoreScreen();
       break;
   }
