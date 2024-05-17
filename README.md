@@ -19,6 +19,16 @@ The "Sound" library is also required. To install, go to: `Sketch > Import Librar
 
 Run `missile_command.pde` to play the game.
 
+## Gameplay Description
+
+```
+- Players start with 6 cities and 3 defence towers. They must protect
+their cities by firing antimssiles towards the enemies decending from above.
+- Points are awarded for shooting down enemies, as well as cities, towers and 
+amunition remaining at the end of each level.
+- The game ends when the player has no cities remaining.
+```
+
 ## Credits
 
 | Title  | Type | Source |

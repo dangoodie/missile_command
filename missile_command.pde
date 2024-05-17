@@ -1,3 +1,23 @@
+/*** Missile Command ***
+
+COSC101, Assignment 3
+Trimester 1, 2024
+Group Members: Daniel Gooden, Tanya Boye, Zoë Koh
+
+Missile Command is a classic Atari arcade game, created in 1980. 
+
+To run the game:
+  As well as the base functionality that is standard with prcoessing,
+  there is one additional library required in order to run the game.
+  To install, go to: 
+  Sketch > Import Library > Manage Libraries
+  then search and install "Sound" by The Processing Foundation.
+  Run `missile_command.pde` to play the game.
+
+Additional information including gameplay description and credits can
+be found in the README.md file found within the Missile Command folder.
+*/
+/*************************************************************************/
 import processing.sound.*;
 
 int red = 0xFF39A4;
@@ -40,6 +60,7 @@ int level = 1;
 // Score Variables
 int score = 0;
 int highScore = 0;
+
 
 void setupGame() {
   buildBases();
