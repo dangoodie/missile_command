@@ -12,6 +12,7 @@ class Base implements Target {
   void fire() {
     Target t = new LocationTarget(new PVector(mouseX, mouseY));
     antiMissiles.add(new Missile(this.position.x, this.position.y, t, speed, false));
+    totalAntiMissilesFired++;
     ammo--;
   }
 
@@ -29,7 +30,7 @@ class Base implements Target {
       rect(position.x, position.y, 60, 50);
       rectMode(CORNER);
 
-       // Drawing the turret barrel
+      // Drawing the turret barrel
       float angle = calculateAngleToMouse();
       float barrelLength = 40;
       float barrelWidth = 8;
@@ -41,7 +42,6 @@ class Base implements Target {
       rectMode(CORNER);
       rect(0, -barrelWidth / 2, barrelLength, barrelWidth);
       popMatrix();
-
 
       // Displaying the ammo
       fill(255);

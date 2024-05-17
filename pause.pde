@@ -5,8 +5,8 @@ void setupPause() {
   game_bground_music.amp(0.05);
 
   // "Resume" button
-  resumeButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "Resume", () -> {   
-    game_bground_music.amp(0.2);
+  resumeButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "Resume", () -> {
+    game_bground_music.amp(0.2); 
     currentState = GameState.GAME;
   });
   resumeButton.bgColor = color(red(blue), green(blue), blue(blue));

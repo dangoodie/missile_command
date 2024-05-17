@@ -7,7 +7,7 @@ class City implements Target {
     isAlive = true;
   }
 
- void display() {
+  void display() {
     if (isAlive) {
       imageMode(CENTER);
       image(city, position.x, position.y, 76, 40);

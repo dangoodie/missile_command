@@ -38,7 +38,7 @@ void drawGameOver() {
   textFont(spaceGroteskLight);
   textSize(18);
   text("Score: " + score, width / 2, 200);
-  text("High Score: " + highScore, width / 2, 220);
+  text("High Score: " + highScore, width / 2, 225);
 
   // Buttons
   newGameButton.display();
