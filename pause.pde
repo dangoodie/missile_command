@@ -35,6 +35,7 @@ void setupPause() {
 
 void drawPause() {
   // Pause screen
+  imageMode(CORNER);
   image(tempBgImage, 0, 0);
   fill(0, 127);
   rect(0, 0, width, height);

@@ -20,8 +20,9 @@ import processing.sound.*;
 
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
+int purple = #CC6CE7;
 PFont friendOrFoeTallBB, spaceGroteskLight;
-PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion;
+PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion, base, destroyedBase;
 PImage tempBgImage; // variable to capture and store a background image
 Sound master;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
@@ -268,6 +269,8 @@ void setup() {
   pause = loadImage("images/pause.png");
   enemy_explosion = loadImage("images/enemy_explosion.png");
   antimissile_explosion = loadImage("images/antimissile_explosion.png");
+  base = loadImage("images/base.png");
+  destroyedBase = loadImage("images/destroyedBase.png");
 
   // Sounds
   master = new Sound(this);
