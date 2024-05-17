@@ -6,6 +6,7 @@ class LocationTarget implements Target {
   }
 
   void display() {
+    imageMode(CORNER);
     image(destination, position.x - destination.width / 80, position.y - destination.height / 80, destination.width / 40, destination.width / 40);
   }
 

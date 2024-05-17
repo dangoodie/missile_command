@@ -11,11 +11,10 @@ class City implements Target {
     if (isAlive) {
       imageMode(CENTER);
       image(city, position.x, position.y, 76, 40);
-      imageMode(CORNER);
+
     } else {
       imageMode(CENTER);
       image(destroyed_city, position.x, position.y, 76, 40);
-      imageMode(CORNER);
     }
 
     if (debug) {
