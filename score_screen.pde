@@ -5,6 +5,7 @@ void setupScoreScreen() {
   // "Return to Game" button
   nextLevelButton = new Button(width/2 - 100, height/2 + 60, 200, 50, "Next Level", () -> {
     currentState = GameState.GAME;
+    displayCrosshair = true;
   });
   nextLevelButton.bgColor = color(red(blue), green(blue), blue(blue));
   nextLevelButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
@@ -15,6 +16,7 @@ void setupScoreScreen() {
 }
 
 void drawScoreScreen() {
+
   cursor();
 
   fill(color(red(blue), green(blue), blue(blue)));
