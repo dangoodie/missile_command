@@ -1,25 +1,25 @@
 import processing.sound.*;
 
-Sound master;
-boolean mute = false;
-
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
-PImage line, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause;
+PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause;
+Sound master;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
+ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
 ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
-ArrayList<ScoreText> scoreText = new ArrayList<ScoreText>();
+boolean mute = false;
 boolean debug = false; // Set this to true to enable debugging features
 int game_start_time;
 GameState currentState = GameState.MENU;
 
 // Anti Missile Variables
+int totalAntiMissilesFired, leftOverAmmo;
 int lastFireTime = 0; // Last time a missile was fired
 int fireDelay = 500; // Delay in milliseconds (1/2 second)
 
@@ -72,6 +72,8 @@ void drawGame() {
   image(background, 0, 0);
   image(line, 0, 38);
 
+  leftOverAmmo = 30 - totalAntiMissilesFired;
+
   // Background music
   if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
     SoundController(game_bground_music, 0.2, true); 
@@ -85,6 +87,15 @@ void drawGame() {
 
   // Level progression
   if (newLevel) {
+    // Score screen
+    if (level > 1) {
+      currentState = GameState.SCORE;
+      totalAntiMissilesFired = 0;
+      getBonusPointsLevel();
+      score += calculateBonusPoints();
+    }
+
+    // Next level
     newLevel = false;
     missileLevelCount = generateLevelMissileCount(level);
     missilesRemaining = missileLevelCount;
@@ -102,6 +113,7 @@ void drawGame() {
     newLevel();
   }
 
+  // Score text on explosions
   for (int i = scoreText.size() - 1; i >= 0; i--) {
     ScoreText st = scoreText.get(i);
     st.display();
@@ -176,8 +188,6 @@ void drawGame() {
         explosions.add(new Explosion(em.position, false));
         scoreText.add(new ScoreText(em.position, scoreMissile()));
 
-        // Score
-
         score += scoreMissile();
         missilesDestroyed++;
       }
@@ -216,26 +226,27 @@ void setup() {
 
   // Images
   line = loadImage("images/line.png");
+  separator = loadImage("images/separator.png");
   background = loadImage("images/background.png");
   menuBackground = loadImage("images/menu_background.png");
   gameOverBackground = loadImage("images/game_over_background.png");
-  crosshair = loadImage("images/crosshair.png");
-  destination = loadImage("images/destination.png");
   city = loadImage("images/neonCity.png");
   destroyed_city = loadImage("images/destroyedCity.png");
+  destination = loadImage("images/destination.png");
+  crosshair = loadImage("images/crosshair.png");
   pause = loadImage("images/pause.png");
 
   // Sounds
   master = new Sound(this);
   menu_music = new SoundFile(this, "sounds/menu-music.wav");
-  start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
-  lazer = new SoundFile(this, "sounds/powerful-laser.wav");
   game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
-  game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
+  button_click = new SoundFile(this, "sounds/button_click.mp3");
+  start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
   explosion_sound = new SoundFile(this, "sounds/explosion.wav");
   enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav"); // Experiment with 2 and 3
   base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav"); // TODO: Search for a new sound
-  button_click = new SoundFile(this, "sounds/button_click.mp3");
+  game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
+  lazer = new SoundFile(this, "sounds/powerful-laser.wav");
 
   setupMenu();
   frameRate(60);
@@ -254,6 +265,10 @@ void draw() {
       break;
     case PAUSE:
       drawPause();
+      break;
+    case SCORE:
+      setupScoreScreen();
+      drawScoreScreen();
       break;
   }
 }
@@ -374,7 +389,7 @@ Target pickValidTarget() {
 void newLevel() {
   level++;
   newLevel = true;
-  
+
   enemyMissiles.clear();
   antiMissiles.clear();
   explosions.clear();
