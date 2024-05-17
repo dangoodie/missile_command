@@ -21,15 +21,11 @@ class Explosion {
   }
 
   void display() {
-    fill(255, 150, 0, lifespan * 5); // Color fades as the explosion "ages"
-    ellipse(position.x, position.y, size, size);
-
-    // Uncomment if there are different images for enemies and anti-missiles
-    // if (isEnemy) {
-    //   image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);
-    // } else {
-    //   image(antimissile_explosion, position.x - size/2, position.y - size/2, size, size);
-    // }
+    if (isEnemy) {
+      image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);
+    } else {
+      image(antimissile_explosion, position.x - size/2, position.y - size/2, size, size);
+    }
   }
 
   boolean isDead() {

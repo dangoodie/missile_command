@@ -6,6 +6,7 @@ void setupMenu() {
   // Start button
   startButton = new Button(width/2 - 100, 330, 200, 50, "Start", () -> {   
     currentState = GameState.GAME;
+    bonusPointsLevel = 0;
     menu_music.stop();
     newGame();
   });
@@ -18,8 +19,6 @@ void setupMenu() {
   });
   quitButton.bgColor = color(red(blue), green(blue), blue(blue));
   quitButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
-  
-  SoundController(menu_music, 0.1, true);
 
   // Mute button
   String muteLabel = mute ? "Unmute" : "Mute";
@@ -29,6 +28,8 @@ void setupMenu() {
   });
   muteButton.bgColor = color(red(blue), green(blue), blue(blue));
   muteButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
+  
+  SoundController(menu_music, 0.1, true);
 }
 
 void drawMenu() {
@@ -43,8 +44,8 @@ void drawMenu() {
   
   // Buttons
   startButton.display();
-  quitButton.display();
   startButton.checkClick();
+  quitButton.display();
   quitButton.checkClick();
   muteButton.display();
   muteButton.checkClick();

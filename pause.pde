@@ -21,7 +21,7 @@ void setupPause() {
   returnMenuButton.bgColor = color(red(blue), green(blue), blue(blue));
   returnMenuButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
 
-   // Mute button
+  // Mute button
   String muteLabel = mute ? "Unmute" : "Mute";
   muteButton = new Button (width/2 - 100, height/2 + 100, 200, 50, muteLabel, () -> {
     mute();
@@ -51,8 +51,8 @@ void drawPause() {
 
   // Buttons
   resumeButton.display();
-  returnMenuButton.display();
   resumeButton.checkClick();
+  returnMenuButton.display();
   returnMenuButton.checkClick();
   muteButton.display();
   muteButton.checkClick();

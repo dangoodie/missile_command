@@ -1,29 +1,27 @@
 /*** Missile Command ***
 
-COSC101, Assignment 3
-Trimester 1, 2024
+COSC101, Assignment 3 - Trimester 1 (2024)
 Group Members: Daniel Gooden, Tanya Boye, Zoë Koh
 
-Missile Command is a classic Atari arcade game, created in 1980. 
+Missile Command is a classic Atari arcade game created in 1980. 
 
 To run the game:
-  As well as the base functionality that is standard with prcoessing,
-  there is one additional library required in order to run the game.
-  To install, go to: 
-  Sketch > Import Library > Manage Libraries
-  then search and install "Sound" by The Processing Foundation.
-  Run `missile_command.pde` to play the game.
+  - As well as the base functionality that is standard with Prcoessing,
+    there is one additional library required in order to run the game.
+    To install, go to: Sketch > Import Library > Manage Libraries,
+    then search and install "Sound" by The Processing Foundation.
+  - Run "missile_command.pde" to play the game.
 
 Additional information including gameplay description and credits can
 be found in the README.md file found within the Missile Command folder.
 */
-/*************************************************************************/
+
 import processing.sound.*;
 
 int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
-PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause;
+PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion;
 Sound master;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
@@ -54,14 +52,13 @@ int missileDelayMax = 5000; // Maximum delay in milliseconds (5 second)
 int missilesDestroyed = 0; // Number of missiles destroyed
 
 // Level Variables
+boolean displayCrosshair = true;
 boolean newLevel = true;
 int level = 1;
-boolean displayCrosshair = true;
 
 // Score Variables
 int score = 0;
 int highScore = 0;
-
 
 void setupGame() {
   buildBases();
@@ -114,6 +111,7 @@ void drawGame() {
       displayCrosshair = false;
       currentState = GameState.SCORE;
       totalAntiMissilesFired = 0;
+      survivingCities = 0;
       getBonusPointsLevel();
       score += calculateBonusPoints();
       setupScoreScreen();
@@ -133,7 +131,12 @@ void drawGame() {
   }
 
   // Check if all missiles have been destroyed
-  if (missilesDestroyed == missileLevelCount && enemyMissiles.size() == 0 && explosions.size() == 0 && antiMissiles.size() == 0 && scoreText.size() == 0){
+  if (
+    missilesDestroyed == missileLevelCount && 
+    enemyMissiles.size() == 0 && 
+    explosions.size() == 0 && 
+    antiMissiles.size() == 0 && 
+    scoreText.size() == 0) {
     newLevel();
   }
 
@@ -261,6 +264,8 @@ void setup() {
   destination = loadImage("images/destination.png");
   crosshair = loadImage("images/crosshair.png");
   pause = loadImage("images/pause.png");
+  enemy_explosion = loadImage("images/enemy_explosion.png");
+  antimissile_explosion = loadImage("images/antimissile_explosion.png");
 
   // Sounds
   master = new Sound(this);

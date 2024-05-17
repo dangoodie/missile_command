@@ -1,5 +1,5 @@
 Button nextLevelButton;
-int survivingCities, bonusPointsLevel;
+int bonusPointsLevel, survivingCities, survivingCitiesPoints, leftOverAmmoPoints;
 
 void setupScoreScreen() {
   // "Return to Game" button
@@ -16,40 +16,51 @@ void setupScoreScreen() {
 }
 
 void drawScoreScreen() {
-
   cursor();
-
-  fill(color(red(blue), green(blue), blue(blue)));
-  textFont(spaceGroteskLight);
-  textSize(15);
-  textAlign(CENTER, CENTER);
-  text("LVL " + bonusPointsLevel, width/2, height / 2 - 145);
 
   fill(255);
   textFont(friendOrFoeTallBB);
   textSize(60);
   textAlign(CENTER, CENTER);
-  text("BONUS POINTS", width / 2, height / 2 - 110);
+  text("LVL " + bonusPointsLevel, width / 2, height / 2 - 145);
 
+  fill(color(red(blue), green(blue), blue(blue)));
+  textFont(spaceGroteskLight);
+  textSize(15);
+  textAlign(CENTER, CENTER);
+  text("BONUS POINTS", width/2, height / 2 - 110);
+
+  // fill(color(red(blue), green(blue), blue(blue)));
+  // textFont(spaceGroteskLight);
+  // textSize(15);
+  // textAlign(CENTER, CENTER);
+  // text("LVL " + bonusPointsLevel, width/2, height / 2 - 145);
+
+  // fill(255);
+  // textFont(friendOrFoeTallBB);
+  // textSize(60);
+  // textAlign(CENTER, CENTER);
+  // text("BONUS POINTS", width / 2, height / 2 - 110);
+
+  fill(255);
   textFont(spaceGroteskLight);
   textSize(20);
-  text("Extra Munition: " + leftOverAmmo, width / 2, 240);
-  text("Surviving Cities: " + survivingCities, width / 2, 270);
+  text("Extra Ammo: " + leftOverAmmo + " x 5 = " + leftOverAmmoPoints, width / 2, 240);
+  text("Surviving Cities: " + survivingCities + " x 100 = " + survivingCitiesPoints, width / 2, 270);
 
   imageMode(CENTER);
   image(separator, 400, 300, separator.width / 9, separator.height / 9);
   text("Score: " + score, width / 2, 330);
 
+  // Button
   nextLevelButton.display();
   nextLevelButton.checkClick();
 }
 
 int calculateBonusPoints() {
-  int totalBonusPoints = 0;
-
   // Left over ammo
   for (int i = 0; i < leftOverAmmo; i++) {
-    totalBonusPoints += 5;
+    leftOverAmmoPoints += 5;
   }
 
   // Surviving cities
@@ -57,12 +68,12 @@ int calculateBonusPoints() {
     City c = cities.get(i);
     
     if (c.isAlive == true) {
-      totalBonusPoints += 100;
+      survivingCitiesPoints += 100;
       survivingCities++;
     }
   }
   
-  return totalBonusPoints;
+  return leftOverAmmoPoints + survivingCitiesPoints;
 }
 
 int getBonusPointsLevel() {
