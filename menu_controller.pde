@@ -1,5 +1,6 @@
 Button startButton;
 Button quitButton;
+Button muteButton;
 
 void setupMenu() {
   // Start button
@@ -19,6 +20,15 @@ void setupMenu() {
   quitButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
   
   SoundController(menu_music, 0.1, true);
+
+  // Mute button
+  String muteLabel = mute ? "Unmute" : "Mute";
+  muteButton = new Button (width/2 - 100, 450, 200, 50, muteLabel, () -> {
+    mute();
+    muteButton.label = mute ? "Unmute" : "Mute";
+  });
+  muteButton.bgColor = color(red(blue), green(blue), blue(blue));
+  muteButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
 }
 
 void drawMenu() {
@@ -36,4 +46,6 @@ void drawMenu() {
   quitButton.display();
   startButton.checkClick();
   quitButton.checkClick();
+  muteButton.display();
+  muteButton.checkClick();
 }
