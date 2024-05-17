@@ -1,8 +1,7 @@
 class ScoreText {
-  int score;
+  int score, now;
   float messageAlpha = 255;
   float moveAmount = 0;
-  int now;
   int duration = 1000; // Duration in milliseconds for the fade effect
   int distance = 10; // Distance to move the text up
   PVector position; // To hold the position of the text
@@ -12,7 +11,7 @@ class ScoreText {
     this.position = position; // Set the position where the text will be displayed
     now = millis(); // Capture the time when the object is created
 
-    if (debug) System.out.println("ScoreText created");
+    if (debug) System.out.println("ScoreText created.");
   }
 
   void display() {
@@ -23,13 +22,12 @@ class ScoreText {
       messageAlpha = fadeAmount; // Update the alpha value based on the elapsed time
     } else {
       messageAlpha = 0; // Set alpha to 0 after the duration
-
     }
 
-    if (messageAlpha > 0) { // Only display the text if alpha is greater than 0
-      fill(255, 255, 255, messageAlpha); // Set fill color with dynamic alpha
+    if (messageAlpha > 0) {
+      fill(255, 255, 255, messageAlpha);
       textSize(20);
-      text("+" + score, position.x, position.y - moveAmount); // Display the score
+      text("+" + score, position.x, position.y - moveAmount);
     }
   }
 
