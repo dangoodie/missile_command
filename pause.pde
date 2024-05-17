@@ -30,13 +30,14 @@ void setupPause() {
   muteButton.bgColor = color(red(blue), green(blue), blue(blue));
   muteButton.bgHoverColor = color(red(color(0x009acc)), green(color(0x009acc)), blue(color(0x009acc)));
   
-  // Darken background
-  fill(0, 127);
-  rect(0, 0, width, height);
+  tempBgImage = get();
 }
 
 void drawPause() {
   // Pause screen
+  image(tempBgImage, 0, 0);
+  fill(0, 127);
+  rect(0, 0, width, height);
   cursor();
   image(
     pause, 
