@@ -37,7 +37,8 @@ class Explosion {
   }
 
   boolean detectCollisionWithinRadius(float targetX, float targetY) {
-    float distance = dist(position.x, position.y, targetX, targetY);
-    return distance <= size - 40;
+    float distanceSq = sq(targetX - position.x) + sq(targetY - position.y);
+    float radiusSq = sq(size / 2);
+    return distanceSq <= radiusSq;
   }
 }
