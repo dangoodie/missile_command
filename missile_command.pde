@@ -22,6 +22,7 @@ int red = 0xFF39A4;
 int blue = 0x25C4F8;
 PFont friendOrFoeTallBB, spaceGroteskLight;
 PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion;
+PImage tempBgImage; // variable to capture and store a background image
 Sound master;
 SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
 SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
@@ -35,7 +36,6 @@ boolean mute = false; // Set this to true to mute the game
 boolean debug = false; // Set this to true to enable debugging features
 int game_start_time; // Time when the game starts
 GameState currentState = GameState.MENU; // Initial state
-PImage tempBgImage; // variable to capture and store a background image
 
 // Anti Missile Variables
 int totalAntiMissilesFired, leftOverAmmo;
