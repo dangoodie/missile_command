@@ -11,13 +11,15 @@ void setupScoreScreen() {
 }
 
 void drawScoreScreen() {
-  // Darken background
-  imageMode(CORNER);
-  image(tempBgImage, 0, 0);
-  fill(0, 127);
-  rect(0, 0, width, height);
   cursor();
 
+  // Background
+  imageMode(CORNER);
+  image(tempBackgroundImage, 0, 0);
+  fill(0, 127);
+  rect(0, 0, width, height);
+
+  // Text
   fill(255);
   textFont(friendOrFoeTallBB);
   textSize(60);
