@@ -23,9 +23,9 @@ class Explosion {
   void display() {
     imageMode(CORNER);
     if (isEnemy) {
-      image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);
+      image(enemyExplosion, position.x - size/2, position.y - size/2, size, size);
     } else {
-      image(antimissile_explosion, position.x - size/2, position.y - size/2, size, size);
+      image(antiMissileExplosion, position.x - size/2, position.y - size/2, size, size);
     }
   }
 

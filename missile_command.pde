@@ -22,11 +22,12 @@ int red = 0xFF39A4;
 int blue = 0x25C4F8;
 int purple = #CC6CE7;
 PFont friendOrFoeTallBB, spaceGroteskLight;
-PImage line, separator, background, menuBackground, gameOverBackground, crosshair, destination, city, destroyed_city, pause, enemy_explosion, antimissile_explosion, base, destroyedBase;
-PImage tempBgImage; // variable to capture and store a background image
+PImage ground, separator, pause, crosshair, destination, background, menuBackground, gameOverBackground;
+PImage enemyExplosion, antiMissileExplosion, city, destroyedCity, base, destroyedBase;
+PImage tempBackgroundImage; // Variable to capture and store a background image
 Sound master;
-SoundFile game_bground_music, menu_music, start_sound, game_over_sound;
-SoundFile lazer, explosion_sound, enemy_explode_sound, base_destroyed_sound, button_click;
+SoundFile gameBackgroundMusic, menuMusic, startSound, gameOverSound;
+SoundFile lazer, explosionSound, enemyExplodeSound, baseDestroyedSound, buttonClickSound;
 ArrayList<Missile> antiMissiles = new ArrayList<Missile>();
 ArrayList<Missile> enemyMissiles = new ArrayList<Missile>();
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
@@ -91,13 +92,14 @@ void buildCities() {
 void drawGame() {
   imageMode(CORNER);
   image(background, 0, 0);
-  image(line, 0, 38);
+  image(ground, 0, 38);
 
+  // Count extra ammo
   leftOverAmmo = 30 - totalAntiMissilesFired;
 
   // Background music
-  if (millis() > (game_start_time) + 5000 && game_bground_music.isPlaying() == false) {
-    SoundController(game_bground_music, 0.2, true); 
+  if (millis() > (game_start_time) + 5000 && gameBackgroundMusic.isPlaying() == false) {
+    SoundController(gameBackgroundMusic, 0.2, true); 
   }
 
   // Check if all cities have been destroyed
@@ -137,7 +139,8 @@ void drawGame() {
     enemyMissiles.size() == 0 && 
     explosions.size() == 0 && 
     antiMissiles.size() == 0 && 
-    scoreText.size() == 0) {
+    scoreText.size() == 0
+  ) {
     newLevel();
   }
 
@@ -160,7 +163,7 @@ void drawGame() {
     if (m.hasHitTarget()) {
       explosions.add(new Explosion(m.position, false));
       antiMissiles.remove(i);
-      SoundController(explosion_sound, 0.3, false);
+      SoundController(explosionSound, 0.3, false);
     }
   }
 
@@ -183,7 +186,7 @@ void drawGame() {
     if (m.isAlive == true) {
       if (m.hasHitTarget()) {
         explosions.add(new Explosion(m.position, true));
-        SoundController(base_destroyed_sound, 0.3, false);
+        SoundController(baseDestroyedSound, 0.3, false);
         enemyMissiles.remove(i);
         missilesDestroyed++;
         
@@ -209,7 +212,7 @@ void drawGame() {
       Missile em = enemyMissiles.get(j);
 
       if (e.detectCollisionWithinRadius(em.position.x, em.position.y)) {
-        SoundController(enemy_explode_sound, 0.8, false);
+        SoundController(enemyExplodeSound, 0.8, false);
 
         em.death();
         enemyMissiles.remove(j);
@@ -239,9 +242,9 @@ void drawGame() {
   updateHighScore();
   displayScoreboard();
 
-  // capture the background for the new level screen
+  // Capture the background for the new level screen
   if (newLevel) {
-    tempBgImage = get();
+    tempBackgroundImage = get();
   }
 
   // Crosshair
@@ -255,36 +258,36 @@ void setup() {
   size(800, 600);
 
   // Fonts
-  friendOrFoeTallBB = createFont("fonts/FriendOrFoeTallBB/Friend or Foe Tall BB/Friend or Foe Tall BB.ttf", 32);
-  spaceGroteskLight = createFont("fonts/SpaceGrotesk/static/SpaceGrotesk-Light.ttf", 32);
+  friendOrFoeTallBB = createFont("assets/fonts/FriendOrFoeTallBB/Friend or Foe Tall BB.ttf", 32);
+  spaceGroteskLight = createFont("assets/fonts/SpaceGrotesk/SpaceGrotesk-Light.ttf", 32);
 
   // Images
-  line = loadImage("images/line.png");
-  separator = loadImage("images/separator.png");
-  background = loadImage("images/background.png");
-  menuBackground = loadImage("images/menu_background.png");
-  gameOverBackground = loadImage("images/game_over_background.png");
-  city = loadImage("images/neonCity.png");
-  destroyed_city = loadImage("images/destroyedCity.png");
-  destination = loadImage("images/destination.png");
-  crosshair = loadImage("images/crosshair.png");
-  pause = loadImage("images/pause.png");
-  enemy_explosion = loadImage("images/enemy_explosion.png");
-  antimissile_explosion = loadImage("images/antimissile_explosion.png");
-  base = loadImage("images/base.png");
-  destroyedBase = loadImage("images/destroyedBase.png");
+  ground = loadImage("assets/images/ground.png");
+  separator = loadImage("assets/images/separator.png");
+  pause = loadImage("assets/images/pause.png");
+  crosshair = loadImage("assets/images/crosshair.png");
+  destination = loadImage("assets/images/destination.png");
+  background = loadImage("assets/images/background.png");
+  menuBackground = loadImage("assets/images/menu_background.png");
+  gameOverBackground = loadImage("assets/images/game_over_background.png");
+  enemyExplosion = loadImage("assets/images/enemy_explosion.png");
+  antiMissileExplosion = loadImage("assets/images/antimissile_explosion.png");
+  city = loadImage("assets/images/neon_city.png");
+  destroyedCity = loadImage("assets/images/destroyed_city.png");
+  base = loadImage("assets/images/base.png");
+  destroyedBase = loadImage("assets/images/destroyed_base.png");
 
   // Sounds
   master = new Sound(this);
-  menu_music = new SoundFile(this, "sounds/menu-music.wav");
-  game_bground_music = new SoundFile(this, "sounds/background-music-1.wav");
-  button_click = new SoundFile(this, "sounds/button_click.mp3");
-  start_sound = new SoundFile(this, "sounds/game-start-sound.wav");
-  explosion_sound = new SoundFile(this, "sounds/explosion.wav");
-  enemy_explode_sound = new SoundFile(this, "sounds/enemy-explode3.wav"); // Experiment with 2 and 3
-  base_destroyed_sound = new SoundFile(this, "sounds/base-destroyed.wav"); // TODO: Search for a new sound
-  game_over_sound = new SoundFile(this, "sounds/game-over-sound.wav");
-  lazer = new SoundFile(this, "sounds/powerful-laser.wav");
+  menuMusic = new SoundFile(this, "assets/sounds/menu-music.wav");
+  gameBackgroundMusic = new SoundFile(this, "assets/sounds/background-music-1.wav");
+  gameOverSound = new SoundFile(this, "assets/sounds/game-over-sound.wav");
+  buttonClickSound = new SoundFile(this, "assets/sounds/button_click.mp3");
+  lazer = new SoundFile(this, "assets/sounds/powerful-laser.wav");
+  startSound = new SoundFile(this, "assets/sounds/game-start-sound.wav");
+  explosionSound = new SoundFile(this, "assets/sounds/explosion.wav");
+  enemyExplodeSound = new SoundFile(this, "assets/sounds/enemy-explode3.wav");
+  baseDestroyedSound = new SoundFile(this, "assets/sounds/base-destroyed.wav");
 
   setupMenu();
   frameRate(60);
@@ -314,7 +317,7 @@ void keyPressed() {
   if (key == ESC) {
     key = 0; // Prevent default behavior
     if (currentState == GameState.PAUSE) {
-      game_bground_music.amp(0.2);
+      gameBackgroundMusic.amp(0.2);
       currentState = GameState.GAME;
     } else if (currentState == GameState.GAME) {
       currentState = GameState.PAUSE;
@@ -450,7 +453,7 @@ void newGame() {
   explosions.clear();
   bases.clear();
   cities.clear();
-  SoundController(start_sound, 0.4, false);
+  SoundController(startSound, 0.4, false);
   setupGame();
 }
 
