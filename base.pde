@@ -24,7 +24,7 @@ class Base implements Target {
 
   void display() {
     if (isAlive) {
-      // Drawing the turret barrel
+      // Barrel
       float angle = calculateAngleToMouse();
       float barrelLength = 30;
       float barrelWidth = 8;
@@ -37,12 +37,12 @@ class Base implements Target {
       rect(0, -barrelWidth / 2, barrelLength, barrelWidth);
       popMatrix();
 
-      // Drawing the base
+      // Base
       noStroke();
       imageMode(CENTER);
       image(base, this.position.x, this.position.y, 60, 50);
 
-      // Displaying the ammo
+      // Ammo
       fill(255);
       textFont(spaceGroteskLight);
       textSize(20);
