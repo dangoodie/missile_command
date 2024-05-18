@@ -21,6 +21,7 @@ class Explosion {
   }
 
   void display() {
+    imageMode(CORNER);
     if (isEnemy) {
       image(enemy_explosion, position.x - size/2, position.y - size/2, size, size);
     } else {

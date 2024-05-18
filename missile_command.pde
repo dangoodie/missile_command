@@ -89,6 +89,7 @@ void buildCities() {
 }
 
 void drawGame() {
+  imageMode(CORNER);
   image(background, 0, 0);
   image(line, 0, 38);
 
@@ -245,6 +246,7 @@ void drawGame() {
 
   // Crosshair
   noCursor();
+  imageMode(CORNER);
   image(crosshair, mouseX - crosshair.width / 28, mouseY - crosshair.height / 28, crosshair.width / 14, crosshair.width / 14);
 }
 
