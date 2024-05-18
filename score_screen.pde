@@ -11,8 +11,7 @@ void setupScoreScreen() {
 }
 
 void drawScoreScreen() {
-
-   // Darken background
+  // Darken background
   imageMode(CORNER);
   image(tempBgImage, 0, 0);
   fill(0, 127);
@@ -30,18 +29,6 @@ void drawScoreScreen() {
   textSize(15);
   textAlign(CENTER, CENTER);
   text("BONUS POINTS", width/2, height / 2 - 110);
-
-  // fill(color(red(blue), green(blue), blue(blue)));
-  // textFont(spaceGroteskLight);
-  // textSize(15);
-  // textAlign(CENTER, CENTER);
-  // text("LVL " + bonusPointsLevel, width/2, height / 2 - 145);
-
-  // fill(255);
-  // textFont(friendOrFoeTallBB);
-  // textSize(60);
-  // textAlign(CENTER, CENTER);
-  // text("BONUS POINTS", width / 2, height / 2 - 110);
 
   fill(255);
   textFont(spaceGroteskLight);
