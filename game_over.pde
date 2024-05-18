@@ -2,8 +2,8 @@ Button newGameButton;
 Button menuButton;
 
 void setupGameOver() {
-  game_bground_music.stop();
-  SoundController(game_over_sound, 0.4, false);
+  gameBackgroundMusic.stop();
+  SoundController(gameOverSound, 0.4, false);
   
   // "New Game" button
   newGameButton = new Button(width/2 - 100, height/2 - 40, 200, 50, "New Game", () -> {   
