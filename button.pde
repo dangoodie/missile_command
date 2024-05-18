@@ -26,7 +26,7 @@ class Button {
       fill(bgColor);  
     }
 
-    // Draw button with rounded corners
+    // Button with rounded corners
     noStroke();
     smooth();
     rect(x, y, w, h, 10);
@@ -44,7 +44,7 @@ class Button {
 
   void checkClick() {
     if (overButton() && mousePressed) {
-      SoundController(button_click, 0.2, false);
+      SoundController(buttonClickSound, 0.2, false);
       action.run();
       mousePressed = false;
     }
