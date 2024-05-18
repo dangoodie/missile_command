@@ -14,7 +14,7 @@ class City implements Target {
 
     } else {
       imageMode(CENTER);
-      image(destroyed_city, position.x, position.y, 76, 40);
+      image(destroyedCity, position.x, position.y, 76, 40);
     }
 
     if (debug) {
