@@ -14,6 +14,9 @@ To run the game:
 
 Additional information including gameplay description and credits can
 be found in the README.md file found within the Missile Command folder.
+
+Our video review can be found here:
+https://mylearn.une.edu.au/filter/echo360/lti_launch.php?url=https%3A%2F%2Fecho360.net.au%2Flti%2Fe377a0cd-befd-434f-9de4-c7d9c1964fca%3FmediaId%3D38ef36cf-07c4-4c8e-bdcd-929c8d0dd5d8%26autoplay%3Dfalse%26automute%3Dfalse&cmid=2815621&width=640&height=360
 */
 
 import processing.sound.*;
@@ -36,7 +39,7 @@ ArrayList<Base> bases = new ArrayList<Base>();
 ArrayList<City> cities = new ArrayList<City>();
 boolean mute = false; // Set this to true to mute the game
 boolean debug = false; // Set this to true to enable debugging features
-int game_start_time; // Time when the game starts
+int gameStartTime; // Set when the player starts the first level
 GameState currentState = GameState.MENU; // Initial state
 
 // Anti Missile Variables
@@ -98,7 +101,7 @@ void drawGame() {
   leftOverAmmo = 30 - totalAntiMissilesFired;
 
   // Background music
-  if (millis() > (game_start_time) + 5000 && gameBackgroundMusic.isPlaying() == false) {
+  if (millis() > (gameStartTime) + 5000 && gameBackgroundMusic.isPlaying() == false) {
     SoundController(gameBackgroundMusic, 0.2, true); 
   }
 
@@ -446,7 +449,7 @@ void newGame() {
   level = 1;
   score = 0;
   newLevel = true;
-  game_start_time = millis();
+  gameStartTime = millis();
 
   enemyMissiles.clear();
   antiMissiles.clear();
