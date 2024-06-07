@@ -14,6 +14,9 @@ Tanya Boye
 Zoë Koh
 
 ## Usage
+Download the .exe file from this [link](https://github.com/dangoodie/missile_command/releases/download/v0.1.0/missile_command.zip) 
+or from the releases tab. Note that this only works on Windows.  
+Alternatively you can download the source code and run it via the Processing App.
 
 You will need to have Processing installed. Download information can be found here: https://processing.org/download
 
